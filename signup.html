@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>CommitteeHub — Join the Trusted Network</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'%3E%3Ctext y='50%25' x='50%25' dominant-baseline='middle' text-anchor='middle' font-size='48'%3E%F0%9F%8F%A6%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F4F6F8;
+      color: #0B1C3D;
+      overflow-x: hidden;
+    }
+
+    /* Brand Theme */
+    :root {
+      --brand-dark: #0B1C3D;
+      --brand-red: #B11217;
+      --brand-white: #FFFFFF;
+      --brand-light: #F4F6F8;
+      --shadow-premium: 0 20px 35px -12px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.02);
+      --shadow-glow: 0 0 0 1px rgba(177, 18, 23, 0.08), 0 12px 28px -8px rgba(0, 0, 0, 0.08);
+      --transition-smooth: all 0.3s cubic-bezier(0.2, 0.95, 0.4, 1.1);
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(177, 18, 23, 0.12);
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    }
+    .navbar {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--brand-red);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .brand i { font-size: 1.6rem; }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--brand-dark);
+      font-weight: 600;
+      transition: var(--transition-smooth);
+    }
+    .nav-links a:hover { color: var(--brand-red); }
+    .btn {
+      border-radius: 60px;
+      padding: 10px 26px;
+      font-weight: 700;
+      transition: var(--transition-smooth);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--brand-red);
+      color: var(--brand-red);
+    }
+    .btn-primary {
+      background: var(--brand-red);
+      color: white;
+      box-shadow: 0 4px 12px rgba(177, 18, 23, 0.25);
+    }
+    .btn-primary:hover, .btn-outline:hover { transform: translateY(-2px); }
+
+    /* Hero Section */
+    .page-header {
+      background: linear-gradient(125deg, #0B1C3D 0%, #1a2f58 100%);
+      color: white;
+      padding: 110px 28px 60px;
+      margin-top: 68px;
+      position: relative;
+    }
+    .page-title {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .page-title h1 {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .breadcrumb { opacity: 0.85; font-weight: 500; }
+
+    /* Main Content */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 28px 60px;
+    }
+    .card-wrap { margin-top: -70px; }
+    .card {
+      background: var(--brand-white);
+      border-radius: 44px;
+      padding: 44px;
+      box-shadow: var(--shadow-premium);
+      border: 1px solid rgba(177, 18, 23, 0.06);
+    }
+
+    /* Tabs */
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #f1f5f9;
+      border-radius: 60px;
+      overflow: hidden;
+      margin-bottom: 36px;
+      padding: 6px;
+    }
+    .tab-btn {
+      border: none;
+      background: transparent;
+      padding: 16px 20px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #4a5b74;
+      border-radius: 50px;
+      transition: var(--transition-smooth);
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--brand-red);
+      color: white;
+      box-shadow: 0 6px 14px rgba(177, 18, 23, 0.25);
+    }
+    .tab-panel { animation: fadeIn 0.35s ease; }
+
+    /* Forms */
+    .form-grid { display: flex; flex-direction: column; gap: 24px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label { font-weight: 700; color: var(--brand-dark); display: flex; align-items: center; gap: 8px; }
+    .form-group input, .form-group textarea, .form-group select {
+      padding: 14px 18px;
+      border-radius: 20px;
+      border: 2px solid #e2edf7;
+      background: #FEFEFE;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--brand-red);
+      box-shadow: 0 0 0 3px rgba(177, 18, 23, 0.12);
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    .instructions { font-size: 0.75rem; color: #6c7a8e; }
+    .error-text { color: var(--brand-red); font-size: 0.75rem; font-weight: 500; min-height: 20px; }
+
+    /* Password Meter */
+    .password-meter {
+      background: #e2e8f0;
+      border-radius: 30px;
+      height: 8px;
+      overflow: hidden;
+      margin: 6px 0 4px;
+    }
+    .password-meter span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--brand-red);
+      transition: width 0.25s ease;
+    }
+    .strength-label { font-size: 0.75rem; color: #5a6c86; }
+
+    /* Submit & CTA */
+    .submit-btn {
+      width: 100%;
+      border: none;
+      border-radius: 60px;
+      padding: 16px;
+      background: linear-gradient(95deg, var(--brand-red), #8f0e12);
+      color: white;
+      font-weight: 800;
+      font-size: 1rem;
+      margin-top: 16px;
+      transition: var(--transition-smooth);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(177, 18, 23, 0.3); }
+    .redirect-committee-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--brand-dark);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 60px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+      margin-top: 16px;
+    }
+    .redirect-committee-btn:hover { background: var(--brand-red); transform: translateY(-2px); }
+
+    .success-panel {
+      display: none;
+      text-align: center;
+      padding: 28px 20px;
+      background: #f0fdf4;
+      border-radius: 32px;
+      margin-top: 24px;
+      animation: fadeScale 0.4s ease;
+    }
+    .success-panel.show { display: block; }
+    .success-icon { font-size: 2.8rem; margin-bottom: 12px; }
+
+    .disclaimer-box {
+      background: #fff8e7;
+      border-left: 5px solid var(--brand-red);
+      border-radius: 24px;
+      padding: 24px;
+      margin-top: 32px;
+      color: #5c4b1f;
+      font-size: 0.85rem;
+    }
+
+    footer {
+      background: var(--brand-dark);
+      color: #b9c3da;
+      padding: 48px 32px 30px;
+      margin-top: 40px;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+    .footer-brand h3 { color: white; margin-bottom: 12px; font-weight: 800; }
+    .footer-col h4 { color: white; margin-bottom: 14px; font-weight: 700; }
+    .footer-col a, .footer-col p { color: #b9c3da; text-decoration: none; display: block; margin-bottom: 8px; transition: 0.2s; }
+    .footer-col a:hover { color: var(--brand-red); }
+    .footer-bottom { text-align: center; margin-top: 40px; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeScale { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+
+    @media (max-width: 880px) {
+      .field-row { grid-template-columns: 1fr; gap: 18px; }
+      .navbar { padding: 12px 20px; }
+      .nav-links { display: none; }
+      .card { padding: 32px 24px; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .page-header { padding: 90px 20px 50px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="navbar">
+    <a href="index.html" class="brand"><i class="fas fa-shield-alt"></i> CommitteeHub</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#browse">Browse</a>
+      <a href="index.html#works">How It Works</a>
+    </div>
+    <div class="nav-actions">
+      <a href="admin.html" class="btn btn-outline">Login</a>
+      <a href="signup.html" class="btn btn-primary">Register</a>
+    </div>
+  </div>
+</header>
+
+<section class="page-header">
+  <div class="page-title">
+    <p class="breadcrumb"><i class="fas fa-home"></i> Home / Register</p>
+    <h1>Join CommitteeHub <i class="fas fa-user-plus"></i></h1>
+    <p style="max-width: 500px; margin-top: 10px;">Become part of Pakistan’s most trusted committee ecosystem</p>
+  </div>
+</section>
+
+<main>
+  <div class="card-wrap">
+    <div class="card">
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" id="tabUser"><i class="fas fa-user"></i> Register as User</button>
+        <button class="tab-btn" id="tabCommittee"><i class="fas fa-building"></i> List Your Committee</button>
+      </div>
+
+      <!-- User Registration Panel -->
+      <div class="tab-panel" id="panelUser">
+        <form id="userForm" novalidate>
+          <div class="form-grid">
+            <div class="field-row">
+              <div class="form-group">
+                <label><i class="fas fa-user-circle"></i> Full Name</label>
+                <input id="fullName" type="text" placeholder="Ayesha Zahid" required />
+                <div class="error-text" id="errorFullName"></div>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-phone-alt"></i> Phone Number</label>
+                <input id="phoneNumber" type="tel" placeholder="03XX-XXXXXXX" required />
+                <div class="error-text" id="errorPhone"></div>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="form-group">
+                <label><i class="fas fa-map-marker-alt"></i> City</label>
+                <input id="userCity" type="text" placeholder="Lahore" required />
+                <div class="error-text" id="errorCity"></div>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-id-card"></i> CNIC <span style="font-weight:400;">(optional)</span></label>
+                <input id="cnic" type="text" placeholder="42101-1234567-1" />
+                <div class="instructions">Format: 00000-0000000-0</div>
+                <div class="error-text" id="errorCnic"></div>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="form-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input id="password" type="password" placeholder="Create a strong password" required />
+                <div class="password-meter"><span id="passwordBar"></span></div>
+                <div class="strength-label" id="strengthLabel">Password strength: weak</div>
+                <div class="error-text" id="errorPassword"></div>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-check-circle"></i> Confirm Password</label>
+                <input id="confirmPassword" type="password" placeholder="Repeat password" required />
+                <div class="error-text" id="errorConfirmPassword"></div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Register Now</button>
+          <div class="success-panel" id="userSuccess">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <h3 style="color:#0B1C3D;">Registration Request Sent!</h3>
+            <p>Your account will be reviewed by admin & approved shortly. You'll receive access to browse committees.</p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Committee Listing Panel (with redirect) -->
+      <div class="tab-panel" id="panelCommittee" style="display:none;">
+        <div style="background: linear-gradient(135deg, #fef2e8, #fff5eb); border-radius: 32px; padding: 32px 28px; text-align: center; border: 1px solid rgba(177,18,23,0.15);">
+          <i class="fas fa-chart-line" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 12px; display: inline-block;"></i>
+          <h3 style="color: var(--brand-dark); margin-bottom: 12px;">Launch Your Committee</h3>
+          <p style="color: #4a5b74; margin-bottom: 24px;">Use our dedicated committee creation form with step-by-step guidance to reach thousands of potential members.</p>
+          <a href="committee-create.html" class="redirect-committee-btn"><i class="fas fa-arrow-right"></i> Create Committee →</a>
+        </div>
+        <div class="disclaimer-box" style="margin-top: 28px;">
+          <i class="fas fa-shield-alt"></i> <strong>Organizer Tip:</strong> Provide transparent rules and clear payment schedule to build trust faster.
+        </div>
+      </div>
+    </div>
+    <div class="disclaimer-box">
+      <i class="fas fa-exclamation-triangle"></i> <strong>Disclaimer:</strong> CommitteeHub is a discovery platform only. We do not facilitate any financial transactions nor assume responsibility for disputes or losses between members and organizers.
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><h3>CommitteeHub</h3><p>Empowering community savings across Pakistan by connecting trusted organizers with reliable members.</p></div>
+    <div class="footer-col"><h4>Quick Links</h4><a href="index.html">Home</a><a href="index.html#browse">Browse Committees</a><a href="index.html#works">How It Works</a></div>
+    <div class="footer-col"><h4>Contact</h4><p>help@committeehub.pk</p><p>+92 321 5678901</p></div>
+    <div class="footer-col"><h4>Legal</h4><p>CommitteeHub only lists committees. All financial matters are between parties.</p></div>
+  </div>
+  <div class="footer-bottom">© 2026 CommitteeHub — Pakistan's most trusted committee platform</div>
+</footer>
+
+<script>
+  // Storage helpers
+  const safeRead = key => { try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch { return null; } };
+  const safeWrite = (key, val) => { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) { console.warn(e); } };
+  
+  const initStorage = () => {
+    const keys = ['pendingCommittees', 'approvedCommittees', 'rejectedCommittees', 'pendingUsers', 'approvedUsers', 'rejectedUsers', 'joinRequests'];
+    keys.forEach(k => { if (safeRead(k) === null) safeWrite(k, []); });
+  };
+  
+  // Tab switching
+  const tabUser = document.getElementById('tabUser');
+  const tabCommittee = document.getElementById('tabCommittee');
+  const panelUser = document.getElementById('panelUser');
+  const panelCommittee = document.getElementById('panelCommittee');
+  
+  tabUser.addEventListener('click', () => {
+    tabUser.classList.add('active');
+    tabCommittee.classList.remove('active');
+    panelUser.style.display = 'block';
+    panelCommittee.style.display = 'none';
+  });
+  tabCommittee.addEventListener('click', () => {
+    tabCommittee.classList.add('active');
+    tabUser.classList.remove('active');
+    panelCommittee.style.display = 'block';
+    panelUser.style.display = 'none';
+  });
+  
+  // Password strength
+  const passwordInput = document.getElementById('password');
+  const passwordBar = document.getElementById('passwordBar');
+  const strengthLabel = document.getElementById('strengthLabel');
+  
+  const updateStrength = () => {
+    const val = passwordInput.value;
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+    const percent = score * 25;
+    passwordBar.style.width = `${percent}%`;
+    if (score <= 1) { passwordBar.style.backgroundColor = '#B11217'; strengthLabel.textContent = 'Weak password'; }
+    else if (score === 2) { passwordBar.style.backgroundColor = '#f59e0b'; strengthLabel.textContent = 'Medium strength'; }
+    else { passwordBar.style.backgroundColor = '#15803d'; strengthLabel.textContent = 'Strong password'; }
+  };
+  passwordInput.addEventListener('input', updateStrength);
+  
+  // Clear errors utility
+  const clearErrors = (form) => { form.querySelectorAll('.error-text').forEach(el => el.textContent = ''); };
+  
+  // User Registration Submit
+  const userForm = document.getElementById('userForm');
+  const userSuccess = document.getElementById('userSuccess');
+  
+  userForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearErrors(userForm);
+    let isValid = true;
+    
+    const fullName = document.getElementById('fullName').value.trim();
+    const phone = document.getElementById('phoneNumber').value.trim();
+    const city = document.getElementById('userCity').value.trim();
+    const cnic = document.getElementById('cnic').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPwd = document.getElementById('confirmPassword').value;
+    
+    if (!fullName) { document.getElementById('errorFullName').textContent = 'Full name is required.'; isValid = false; }
+    if (!/^03\d{2}-\d{7}$/.test(phone)) { document.getElementById('errorPhone').textContent = 'Use format: 03XX-XXXXXXX'; isValid = false; }
+    if (!city) { document.getElementById('errorCity').textContent = 'City is required.'; isValid = false; }
+    if (cnic && !/^\d{5}-\d{7}-\d$/.test(cnic)) { document.getElementById('errorCnic').textContent = 'Invalid CNIC format (00000-0000000-0)'; isValid = false; }
+    if (!password || password.length < 8) { document.getElementById('errorPassword').textContent = 'Password must be at least 8 characters.'; isValid = false; }
+    if (confirmPwd !== password) { document.getElementById('errorConfirmPassword').textContent = 'Passwords do not match.'; isValid = false; }
+    
+    if (!isValid) return;
+    
+    // Save pending user
+    const pendingUsers = safeRead('pendingUsers') || [];
+    const newUser = {
+      id: `user_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+      name: fullName,
+      phone: phone,
+      city: city,
+      cnic: cnic || '',
+      password: password,
+      joinDate: new Date().toISOString(),
+      status: 'pending'
+    };
+    pendingUsers.push(newUser);
+    safeWrite('pendingUsers', pendingUsers);
+    
+    // Show success & reset
+    userForm.reset();
+    passwordBar.style.width = '0%';
+    strengthLabel.textContent = 'Password strength: weak';
+    userSuccess.classList.add('show');
+    setTimeout(() => userSuccess.classList.remove('show'), 3500);
+  });
+  
+  // Initialize storage on load
+  window.addEventListener('DOMContentLoaded', () => {
+    initStorage();
+    // ensure proper tab display
+    panelUser.style.display = 'block';
+    panelCommittee.style.display = 'none';
+  });
+</script>
+</body>
+</html>

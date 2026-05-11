@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>CommitteeHub | Premium Admin Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F4F6F8;
+      color: #0B1C3D;
+      overflow-x: hidden;
+    }
+
+    /* Brand Colors */
+    :root {
+      --brand-dark: #0B1C3D;
+      --brand-red: #B11217;
+      --brand-white: #FFFFFF;
+      --brand-light: #F4F6F8;
+      --gradient-primary: linear-gradient(135deg, #0B1C3D 0%, #1a2f58 100%);
+      --gradient-accent: linear-gradient(135deg, #B11217, #8a0e12);
+      --shadow-premium: 0 20px 35px -12px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.03);
+      --shadow-glow: 0 0 0 1px rgba(177, 18, 23, 0.08), 0 10px 25px -8px rgba(0, 0, 0, 0.1);
+      --transition-smooth: all 0.3s cubic-bezier(0.2, 0.95, 0.4, 1);
+    }
+
+    /* AUTH OVERLAY */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 28, 61, 0.92);
+      backdrop-filter: blur(12px);
+      display: grid;
+      place-items: center;
+      z-index: 2000;
+      transition: var(--transition-smooth);
+    }
+    .login-card {
+      background: var(--brand-white);
+      border-radius: 48px;
+      padding: 44px 40px;
+      max-width: 440px;
+      width: 90%;
+      text-align: center;
+      box-shadow: var(--shadow-premium);
+      border: 1px solid rgba(177, 18, 23, 0.15);
+      animation: floatIn 0.4s ease;
+    }
+    .login-card h2 { font-weight: 800; font-size: 1.9rem; background: var(--gradient-accent); background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 12px; }
+    .login-card input { width: 100%; padding: 16px 20px; border: 2px solid #e2e8f0; border-radius: 60px; margin: 20px 0; font-weight: 500; transition: 0.2s; }
+    .login-card input:focus { border-color: var(--brand-red); outline: none; box-shadow: 0 0 0 4px rgba(177,18,23,0.15); }
+    .login-card button { background: var(--gradient-accent); border: none; width: 100%; padding: 14px; border-radius: 60px; font-weight: 800; color: white; font-size: 1rem; cursor: pointer; transition: 0.2s; }
+    .login-card button:hover { transform: translateY(-3px); box-shadow: 0 12px 25px -8px var(--brand-red); }
+
+    /* LAYOUT PREMIUM */
+    .dashboard-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+    /* SIDEBAR ATTRACTIVE */
+    .sidebar-premium {
+      width: 280px;
+      background: var(--brand-dark);
+      backdrop-filter: blur(0px);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      transition: var(--transition-smooth);
+      z-index: 100;
+      box-shadow: 8px 0 28px rgba(0, 0, 0, 0.12);
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 48px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .logo-icon {
+      background: var(--brand-red);
+      width: 42px;
+      height: 42px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+    }
+    .logo-text {
+      font-weight: 800;
+      font-size: 1.45rem;
+      color: white;
+      letter-spacing: -0.3px;
+    }
+    .nav-premium {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .nav-item-premium {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-radius: 24px;
+      color: rgba(255,255,255,0.75);
+      font-weight: 600;
+      transition: var(--transition-smooth);
+      cursor: pointer;
+    }
+    .nav-item-premium .left { display: flex; align-items: center; gap: 14px; }
+    .nav-item-premium i { width: 24px; font-size: 1.2rem; }
+    .nav-item-premium.active {
+      background: rgba(177, 18, 23, 0.2);
+      color: white;
+      border-left: 4px solid var(--brand-red);
+      background: linear-gradient(90deg, rgba(177,18,23,0.2) 0%, rgba(11,28,61,0) 100%);
+    }
+    .nav-item-premium:hover:not(.active) { background: rgba(255,255,255,0.08); color: white; }
+    .badge-premium {
+      background: var(--brand-red);
+      border-radius: 40px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: white;
+    }
+    .logout-premium {
+      margin-top: auto;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 30px;
+      padding: 14px;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .logout-premium:hover { background: var(--brand-red); border-color: transparent; }
+
+    /* MAIN CONTENT */
+    .main-premium {
+      flex: 1;
+      padding: 32px 40px;
+      overflow-x: auto;
+    }
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .page-header h1 { font-size: 2rem; font-weight: 800; background: var(--gradient-primary); background-clip: text; -webkit-background-clip: text; color: transparent; }
+
+    /* STATS GRID PREMIUM */
+    .stats-premium {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .stat-premium-card {
+      background: white;
+      border-radius: 32px;
+      padding: 24px;
+      transition: var(--transition-smooth);
+      box-shadow: var(--shadow-glow);
+      border: 1px solid rgba(0,0,0,0.02);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-premium-card:hover { transform: translateY(-6px); box-shadow: 0 28px 40px -16px rgba(177,18,23,0.2); }
+    .stat-icon { font-size: 2.4rem; margin-bottom: 16px; color: var(--brand-red); }
+    .stat-premium-card h3 { font-size: 2.2rem; font-weight: 800; margin-bottom: 6px; }
+    .stat-premium-card p { color: #5a6874; font-weight: 600; letter-spacing: -0.2px; }
+    .quick-action-row { display: flex; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
+    .quick-btn { background: #f1f5f9; border: none; border-radius: 40px; padding: 10px 20px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: 0.2s; color: var(--brand-dark); }
+    .quick-btn:hover { background: var(--brand-red); color: white; transform: scale(0.96); }
+
+    /* TABLES premium */
+    .data-card {
+      background: white;
+      border-radius: 36px;
+      padding: 28px;
+      box-shadow: var(--shadow-glow);
+      margin-top: 16px;
+      overflow-x: auto;
+    }
+    .data-card h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    table { width: 100%; border-collapse: collapse; min-width: 700px; }
+    th { text-align: left; padding: 18px 12px; background: #f8fafc; color: var(--brand-dark); font-weight: 700; border-radius: 20px 20px 0 0; }
+    td { padding: 16px 12px; border-bottom: 1px solid #eef2f6; font-weight: 500; }
+    .badge-status { padding: 6px 14px; border-radius: 40px; font-weight: 700; font-size: 0.75rem; display: inline-block; }
+    .badge-verified { background: #e6f7ec; color: #1e7b48; }
+    .badge-fresher { background: #ffeaea; color: var(--brand-red); }
+    .action-btn { border: none; background: transparent; font-weight: 700; padding: 8px 14px; border-radius: 30px; cursor: pointer; transition: 0.2s; margin: 0 4px; }
+    .btn-approve { background: #0B1C3D; color: white; }
+    .btn-approve:hover { background: var(--brand-red); transform: translateY(-2px); }
+    .btn-reject { background: #f1f3f5; color: #a51b1b; }
+    .btn-forward { background: #e6f0ff; color: #0B1C3D; }
+    .btn-delete { background: #fff0f0; color: var(--brand-red); }
+    .subtab-group { display: flex; gap: 12px; margin-bottom: 24px; }
+    .subtab { background: #f1f5f9; border: none; padding: 10px 24px; border-radius: 40px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .subtab.active { background: var(--brand-dark); color: white; }
+    .empty-row { text-align: center; padding: 48px; color: #94a3b8; }
+
+    @media (max-width: 1000px) { .sidebar-premium { width: 100px; padding: 24px 12px; } .logo-text, .nav-item-premium span:not(.badge-premium) { display: none; } .nav-item-premium { justify-content: center; } .badge-premium { position: absolute; margin-left: 8px; } .main-premium { padding: 24px; } }
+    @keyframes floatIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    footer { text-align: center; margin-top: 20px; padding: 20px; font-size: 0.8rem; color: #5f6c7a; }
+  </style>
+</head>
+<body>
+
+<div class="auth-overlay" id="authOverlay">
+  <div class="login-card">
+    <div class="logo-icon" style="margin: 0 auto 12px; width: 60px; height: 60px; font-size: 2rem;">🛡️</div>
+    <h2>Admin Portal</h2>
+    <p style="color:#5a6874;">Secure access · Premium control</p>
+    <input type="password" id="adminPass" placeholder="Enter master password" autocomplete="off">
+    <button id="unlockBtn">🔓 Unlock Dashboard</button>
+    <div id="loginErr" style="color:#B11217; margin-top: 12px; font-weight:600;"></div>
+  </div>
+</div>
+
+<div class="dashboard-layout" style="display: none;" id="dashboardApp">
+  <!-- ATTRACTIVE SIDEBAR -->
+  <aside class="sidebar-premium">
+    <div class="logo-area">
+      <div class="logo-icon">🏦</div>
+      <div class="logo-text">CommitteeHub</div>
+    </div>
+    <div class="nav-premium">
+      <div class="nav-item-premium active" data-view="dashboard">
+        <div class="left"><i class="fas fa-chart-line"></i> <span>Dashboard</span></div>
+        <span class="badge-premium" id="sideDashCount">0</span>
+      </div>
+      <div class="nav-item-premium" data-view="users">
+        <div class="left"><i class="fas fa-user-plus"></i> <span>Pending Users</span></div>
+        <span class="badge-premium" id="sideUserCount">0</span>
+      </div>
+      <div class="nav-item-premium" data-view="committees">
+        <div class="left"><i class="fas fa-building"></i> <span>Pending Committees</span></div>
+        <span class="badge-premium" id="sideCommCount">0</span>
+      </div>
+      <div class="nav-item-premium" data-view="requests">
+        <div class="left"><i class="fas fa-envelope"></i> <span>Join Requests</span></div>
+        <span class="badge-premium" id="sideReqCount">0</span>
+      </div>
+      <div class="nav-item-premium" data-view="active">
+        <div class="left"><i class="fas fa-check-circle"></i> <span>Active Committees</span></div>
+        <span class="badge-premium" id="sideActiveCount">0</span>
+      </div>
+      <div class="nav-item-premium" data-view="rejected">
+        <div class="left"><i class="fas fa-archive"></i> <span>Rejected Items</span></div>
+        <span class="badge-premium" id="sideRejCount">0</span>
+      </div>
+    </div>
+    <div class="logout-premium" id="logoutBtnSide"><i class="fas fa-sign-out-alt"></i> <span>Exit</span></div>
+  </aside>
+
+  <main class="main-premium">
+    <div class="page-header">
+      <h1 id="pageTitle">Executive Dashboard</h1>
+      <div><i class="fas fa-shield-alt" style="color:#B11217;"></i> <span style="font-weight:500;">Secure Admin Zone</span></div>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <div id="viewDashboard">
+      <div class="stats-premium">
+        <div class="stat-premium-card"><div class="stat-icon"><i class="fas fa-users"></i></div><h3 id="statPendingUsers">0</h3><p>Pending User Approvals</p><div class="quick-action-row"><button class="quick-btn" data-quick="users">↗ Review Users</button></div></div>
+        <div class="stat-premium-card"><div class="stat-icon"><i class="fas fa-city"></i></div><h3 id="statPendingComm">0</h3><p>Pending Committees</p><div class="quick-action-row"><button class="quick-btn" data-quick="committees">⚡ Validate</button></div></div>
+        <div class="stat-premium-card"><div class="stat-icon"><i class="fas fa-handshake"></i></div><h3 id="statJoinRequests">0</h3><p>New Join Requests</p><div class="quick-action-row"><button class="quick-btn" data-quick="requests">📬 Handle Now</button></div></div>
+        <div class="stat-premium-card"><div class="stat-icon"><i class="fas fa-check-double"></i></div><h3 id="statActiveCommittees">0</h3><p>Active Committees</p><div class="quick-action-row"><button class="quick-btn" data-quick="active">📊 Overview</button></div></div>
+      </div>
+      <div class="data-card"><h2><i class="fas fa-bolt" style="color:#B11217;"></i> Quick Actions</h2><div style="display: flex; gap: 16px; flex-wrap: wrap;"><button class="btn-approve" style="padding:12px 28px;" data-quick="users">👥 Approve Pending Users</button><button class="btn-approve" style="background:#0B1C3D;" data-quick="committees">🏛️ Approve Committees</button><button class="btn-forward" data-quick="requests">📨 Forward Pending Requests</button></div></div>
+    </div>
+
+    <!-- PENDING USERS -->
+    <div id="viewUsers" style="display:none;"><div class="data-card"><h2><i class="fas fa-user-clock"></i> Pending User Approvals</h2><table><thead><tr><th>Name</th><th>Phone</th><th>City</th><th>CNIC</th><th>Trust Level</th><th>Actions</th></tr></thead><tbody id="usersTableBody"></tbody></table></div></div>
+
+    <!-- PENDING COMMITTEES -->
+    <div id="viewCommittees" style="display:none;"><div class="data-card"><h2><i class="fas fa-clock"></i> Committees Awaiting Approval</h2><table><thead><tr><th>Name</th><th>Organizer</th><th>Amount</th><th>Slots</th><th>City</th><th>Actions</th></tr></thead><tbody id="committeesTableBody"></tbody></table></div></div>
+
+    <!-- JOIN REQUESTS -->
+    <div id="viewRequests" style="display:none;"><div class="data-card"><h2><i class="fas fa-inbox"></i> Member Join Requests</h2><table><thead><tr><th>Committee</th><th>Requester</th><th>Phone</th><th>Message</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="requestsTableBody"></tbody></table></div></div>
+
+    <!-- ACTIVE COMMITTEES -->
+    <div id="viewActive" style="display:none;"><div class="data-card"><h2><i class="fas fa-check-shield"></i> Live Committees</h2><table><thead><tr><th>Committee</th><th>Organizer</th><th>Amount</th><th>Slots filled</th><th>City</th><th>Trust</th><th>Delete</th></tr></thead><tbody id="activeTableBody"></tbody></table></div></div>
+
+    <!-- REJECTED ITEMS -->
+    <div id="viewRejected" style="display:none;"><div class="data-card"><div class="subtab-group"><button class="subtab active" data-rej="users">Rejected Users</button><button class="subtab" data-rej="committees">Rejected Committees</button></div><div id="rejUsersPanel"><table><thead><tr><th>Name</th><th>Phone</th><th>City</th><th>Action</th></tr></thead><tbody id="rejectedUsersBody"></tbody></table></div><div id="rejCommitteesPanel" style="display:none;"><table><thead><tr><th>Committee</th><th>Organizer</th><th>Amount</th><th>City</th><th>Restore</th></tr></thead><tbody id="rejectedCommBody"></tbody></table></div></div></div>
+  </main>
+</div>
+<footer>© 2026 CommitteeHub — Premium Admin Suite | Secure Management Panel</footer>
+
+<script>
+  // ----- PREMIUM DASHBOARD STORAGE -----
+  const STORAGE_KEYS = {
+    pendingUsers: 'pendingUsers', approvedUsers: 'approvedUsers', rejectedUsers: 'rejectedUsers',
+    pendingCommittees: 'pendingCommittees', approvedCommittees: 'approvedCommittees', rejectedCommittees: 'rejectedCommittees',
+    joinRequests: 'joinRequests'
+  };
+  function get(key) { const d = localStorage.getItem(key); return d ? JSON.parse(d) : null; }
+  function set(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+
+  function initMockData() {
+    if(!get(STORAGE_KEYS.pendingUsers)) set(STORAGE_KEYS.pendingUsers, [
+      { id: 'u1', name: 'Abdul Samad', phone: '0300-1112223', city: 'Karachi', cnic: '42101-1234567-8', joinDate: new Date().toISOString() },
+      { id: 'u2', name: 'Hira Tariq', phone: '0312-9876543', city: 'Lahore', cnic: '35201-9876543-2', joinDate: new Date(Date.now() - 86400000).toISOString() }
+    ]);
+    if(!get(STORAGE_KEYS.approvedUsers)) set(STORAGE_KEYS.approvedUsers, []);
+    if(!get(STORAGE_KEYS.rejectedUsers)) set(STORAGE_KEYS.rejectedUsers, []);
+    if(!get(STORAGE_KEYS.pendingCommittees)) set(STORAGE_KEYS.pendingCommittees, [
+      { id: 'c1', name: 'DHA Savings Circle', organizerName: 'Rashid Mehmood', amount: 3500, totalSlots: 12, filledSlots: 2, city: 'Karachi', phone: '0321-555888', organizerJoinDate: new Date().toISOString() },
+      { id: 'c2', name: 'Gulberg Gold', organizerName: 'Sania Aslam', amount: 5000, totalSlots: 10, filledSlots: 1, city: 'Lahore', phone: '0333-444777', organizerJoinDate: new Date().toISOString() }
+    ]);
+    if(!get(STORAGE_KEYS.approvedCommittees)) set(STORAGE_KEYS.approvedCommittees, [
+      { id: 'act1', name: 'Faisal Town Family', organizerName: 'Kamran Ali', amount: 4000, totalSlots: 12, filledSlots: 8, city: 'Islamabad', organizerJoinDate: new Date(Date.now() - 86400000 * 45).toISOString() }
+    ]);
+    if(!get(STORAGE_KEYS.rejectedCommittees)) set(STORAGE_KEYS.rejectedCommittees, []);
+    if(!get(STORAGE_KEYS.joinRequests)) set(STORAGE_KEYS.joinRequests, [
+      { id: 'r1', committeeId: 'act1', committeeName: 'Faisal Town Family', name: 'Ahmed Raza', phone: '0345-112233', city: 'Islamabad', message: 'Interested in joining', requestDate: new Date().toISOString(), status: 'pending' }
+    ]);
+  }
+
+  let currentView = 'dashboard';
+
+  function getTrust(joinDate) { const days = (Date.now() - new Date(joinDate)) / 86400000; return days < 30 ? { label: '🔴 Fresher', cls: 'badge-fresher' } : { label: '🔵 Verified', cls: 'badge-verified' }; }
+
+  function renderAll() {
+    const pendingUsers = get(STORAGE_KEYS.pendingUsers) || [];
+    const pendingCommittees = get(STORAGE_KEYS.pendingCommittees) || [];
+    const joinRequests = get(STORAGE_KEYS.joinRequests) || [];
+    const activeCommittees = get(STORAGE_KEYS.approvedCommittees) || [];
+    const rejectedUsers = get(STORAGE_KEYS.rejectedUsers) || [];
+    const rejectedComm = get(STORAGE_KEYS.rejectedCommittees) || [];
+
+    document.getElementById('sideDashCount').innerText = pendingUsers.length + pendingCommittees.length;
+    document.getElementById('sideUserCount').innerText = pendingUsers.length;
+    document.getElementById('sideCommCount').innerText = pendingCommittees.length;
+    document.getElementById('sideReqCount').innerText = joinRequests.length;
+    document.getElementById('sideActiveCount').innerText = activeCommittees.length;
+    document.getElementById('sideRejCount').innerText = rejectedUsers.length + rejectedComm.length;
+
+    document.getElementById('statPendingUsers').innerText = pendingUsers.length;
+    document.getElementById('statPendingComm').innerText = pendingCommittees.length;
+    document.getElementById('statJoinRequests').innerText = joinRequests.length;
+    document.getElementById('statActiveCommittees').innerText = activeCommittees.length;
+
+    // Users table
+    const usersBody = document.getElementById('usersTableBody');
+    usersBody.innerHTML = pendingUsers.length ? pendingUsers.map(u => `<tr><td>${u.name}</td><td>${u.phone}</td><td>${u.city}</td><td>${u.cnic || '—'}</td><td><span class="badge-status badge-fresher">🔴 Fresher</span></td><td><button class="action-btn btn-approve" onclick="approveUser('${u.id}')">✅ Approve</button> <button class="action-btn btn-reject" onclick="rejectUser('${u.id}')">❌ Reject</button></td></tr>`).join('') : '<tr><td colspan="6" class="empty-row">✨ All clear — no pending users</td></tr>';
+
+    const commBody = document.getElementById('committeesTableBody');
+    commBody.innerHTML = pendingCommittees.length ? pendingCommittees.map(c => `<tr><td>${c.name}</td><td>${c.organizerName}</td><td>₨ ${c.amount}</td><td>${c.totalSlots}</td><td>${c.city}</td><td><button class="action-btn btn-approve" onclick="approveCommittee('${c.id}')">✅ Approve</button> <button class="action-btn btn-reject" onclick="rejectCommittee('${c.id}')">❌ Reject</button></td></tr>`).join('') : '<tr><td colspan="6" class="empty-row">No pending committees</td></tr>';
+
+    const reqBody = document.getElementById('requestsTableBody');
+    reqBody.innerHTML = joinRequests.map(r => `<tr><td>${r.committeeName}</td><td>${r.name}</td><td>${r.phone}</td><td>${r.message || '—'}</td><td>${new Date(r.requestDate).toLocaleDateString()}</td><td><span class="badge-status" style="background:#ffe6cc;">${r.status}</span></td><td><button class="action-btn btn-forward" onclick="forwardReq('${r.id}')">📤 Forward</button> <button class="action-btn btn-reject" onclick="rejectReq('${r.id}')">❌ Reject</button></td></tr>`).join('');
+    if(!joinRequests.length) reqBody.innerHTML = '<tr><td colspan="7" class="empty-row">No join requests yet</td></tr>';
+
+    const activeBody = document.getElementById('activeTableBody');
+    activeBody.innerHTML = activeCommittees.map(a => {
+      const trust = getTrust(a.organizerJoinDate);
+      return `<tr><td>${a.name}</td><td>${a.organizerName}</td><td>₨ ${a.amount}</td><td>${a.filledSlots}/${a.totalSlots}</td><td>${a.city}</td><td><span class="badge-status ${trust.cls}">${trust.label}</span></td><td><button class="action-btn btn-delete" onclick="deleteActive('${a.id}')">🗑️ Delete</button></td></tr>`;
+    }).join('');
+    if(!activeCommittees.length) activeBody.innerHTML = '<tr><td colspan="7" class="empty-row">No active committees</td></tr>';
+
+    document.getElementById('rejectedUsersBody').innerHTML = rejectedUsers.map(u => `<tr><td>${u.name}</td><td>${u.phone}</td><td>${u.city}</td><td><button class="action-btn btn-approve" onclick="restoreUser('${u.id}')">↩️ Restore</button></td></tr>`).join('') || '<tr><td colspan="4" class="empty-row">No rejected users</td></tr>';
+    document.getElementById('rejectedCommBody').innerHTML = rejectedComm.map(c => `<tr><td>${c.name}</td><td>${c.organizerName}</td><td>₨ ${c.amount}</td><td>${c.city}</td><td><button class="action-btn btn-approve" onclick="restoreCommittee('${c.id}')">⟳ Restore</button></td></tr>`).join('') || '<tr><td colspan="5" class="empty-row">No rejected committees</td></tr>';
+  }
+
+  window.approveUser = (id) => { moveItem(STORAGE_KEYS.pendingUsers, STORAGE_KEYS.approvedUsers, id); renderAll(); };
+  window.rejectUser = (id) => { moveItem(STORAGE_KEYS.pendingUsers, STORAGE_KEYS.rejectedUsers, id); renderAll(); };
+  window.approveCommittee = (id) => { const pending = get(STORAGE_KEYS.pendingCommittees) || []; const target = pending.find(c => c.id === id); if(target) { const approved = get(STORAGE_KEYS.approvedCommittees) || []; set(STORAGE_KEYS.approvedCommittees, [...approved, target]); set(STORAGE_KEYS.pendingCommittees, pending.filter(c => c.id !== id)); } renderAll(); };
+  window.rejectCommittee = (id) => { moveItem(STORAGE_KEYS.pendingCommittees, STORAGE_KEYS.rejectedCommittees, id); renderAll(); };
+  window.forwardReq = (id) => { const reqs = get(STORAGE_KEYS.joinRequests) || []; set(STORAGE_KEYS.joinRequests, reqs.map(r => r.id === id ? { ...r, status: 'forwarded' } : r)); renderAll(); };
+  window.rejectReq = (id) => { const reqs = get(STORAGE_KEYS.joinRequests) || []; set(STORAGE_KEYS.joinRequests, reqs.map(r => r.id === id ? { ...r, status: 'rejected' } : r)); renderAll(); };
+  window.deleteActive = (id) => { if(confirm('Permanently remove this active committee?')) { const active = get(STORAGE_KEYS.approvedCommittees) || []; set(STORAGE_KEYS.approvedCommittees, active.filter(c => c.id !== id)); renderAll(); } };
+  window.restoreUser = (id) => { moveItem(STORAGE_KEYS.rejectedUsers, STORAGE_KEYS.pendingUsers, id); renderAll(); };
+  window.restoreCommittee = (id) => { moveItem(STORAGE_KEYS.rejectedCommittees, STORAGE_KEYS.pendingCommittees, id); renderAll(); };
+
+  function moveItem(fromKey, toKey, id) { const fromArr = get(fromKey) || []; const item = fromArr.find(i => i.id === id); if(item) { const toArr = get(toKey) || []; set(toKey, [...toArr, item]); set(fromKey, fromArr.filter(i => i.id !== id)); } }
+
+  function switchView(view) { currentView = view; document.getElementById('viewDashboard').style.display = view === 'dashboard' ? 'block' : 'none'; document.getElementById('viewUsers').style.display = view === 'users' ? 'block' : 'none'; document.getElementById('viewCommittees').style.display = view === 'committees' ? 'block' : 'none'; document.getElementById('viewRequests').style.display = view === 'requests' ? 'block' : 'none'; document.getElementById('viewActive').style.display = view === 'active' ? 'block' : 'none'; document.getElementById('viewRejected').style.display = view === 'rejected' ? 'block' : 'none'; document.querySelectorAll('.nav-item-premium').forEach(el => el.classList.toggle('active', el.dataset.view === view)); const titles = { dashboard:'Executive Dashboard', users:'User Approvals', committees:'Committee Approvals', requests:'Join Requests', active:'Active Committees', rejected:'Archived Items' }; document.getElementById('pageTitle').innerText = titles[view] || 'Dashboard'; renderAll(); }
+
+  document.querySelectorAll('.nav-item-premium').forEach(el => el.addEventListener('click', () => switchView(el.dataset.view)));
+  document.querySelectorAll('[data-quick]').forEach(btn => btn.addEventListener('click', (e) => { const target = btn.dataset.quick; if(target) switchView(target); }));
+  document.querySelectorAll('.subtab').forEach(t => t.addEventListener('click', (e) => { const type = t.dataset.rej; document.getElementById('rejUsersPanel').style.display = type === 'users' ? 'block' : 'none'; document.getElementById('rejCommitteesPanel').style.display = type === 'committees' ? 'block' : 'none'; document.querySelectorAll('.subtab').forEach(ss => ss.classList.remove('active')); t.classList.add('active'); }));
+
+  document.getElementById('logoutBtnSide').addEventListener('click', () => location.reload());
+  const overlay = document.getElementById('authOverlay');
+  document.getElementById('unlockBtn').addEventListener('click', () => { if(document.getElementById('adminPass').value === 'admin123') { overlay.style.display = 'none'; document.getElementById('dashboardApp').style.display = 'flex'; initMockData(); renderAll(); switchView('dashboard'); } else { document.getElementById('loginErr').innerText = 'Invalid credentials'; document.querySelector('.login-card').classList.add('shake'); setTimeout(()=>document.querySelector('.login-card')?.classList.remove('shake'),400); } });
+</script>
+</body>
+</html>

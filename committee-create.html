@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>CommitteeHub — Start Your Committee | Premium Onboarding</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'%3E%3Ctext y='50%25' x='50%25' dominant-baseline='middle' text-anchor='middle' font-size='48'%3E%F0%9F%8F%A6%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F4F6F8;
+      color: #0B1C3D;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: auto;
+    }
+
+    /* Brand Theme */
+    :root {
+      --brand-dark: #0B1C3D;
+      --brand-red: #B11217;
+      --brand-white: #FFFFFF;
+      --brand-light: #F4F6F8;
+      --shadow-premium: 0 20px 35px -12px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.02);
+      --shadow-glow: 0 0 0 1px rgba(177, 18, 23, 0.08), 0 12px 28px -8px rgba(0, 0, 0, 0.08);
+      --transition-smooth: all 0.3s cubic-bezier(0.2, 0.95, 0.4, 1.1);
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(177, 18, 23, 0.12);
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    }
+    .navbar {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--brand-red);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .brand i { font-size: 1.6rem; }
+    .btn-back {
+      background: #f1f5f9;
+      border: none;
+      border-radius: 40px;
+      padding: 10px 24px;
+      font-weight: 700;
+      color: var(--brand-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition-smooth);
+      text-decoration: none;
+    }
+    .btn-back:hover { background: var(--brand-red); color: white; transform: translateY(-2px); }
+
+    /* Hero */
+    .hero-section {
+      background: linear-gradient(125deg, #0B1C3D 0%, #1a2f58 100%);
+      color: white;
+      padding: 130px 24px 50px;
+      margin-top: 68px;
+      position: relative;
+    }
+    .hero-content { max-width: 1280px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(177, 18, 23, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 10px 22px;
+      border-radius: 60px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.25);
+      margin-bottom: 22px;
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+    .hero-title span { color: #ffc2c2; border-bottom: 3px solid var(--brand-red); }
+    .hero-copy { max-width: 640px; font-size: 1.1rem; opacity: 0.9; line-height: 1.6; }
+
+    /* Main container with scrollable card */
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 30px 24px 70px;
+    }
+    .card-container {
+      background: var(--brand-white);
+      border-radius: 44px;
+      box-shadow: var(--shadow-premium);
+      padding: 0;
+      transition: var(--transition-smooth);
+      border: 1px solid rgba(177, 18, 23, 0.05);
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 180px);
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+    /* Custom scroll inside card */
+    .card-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .card-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    .card-container::-webkit-scrollbar-thumb {
+      background: var(--brand-red);
+      border-radius: 10px;
+    }
+    .inner-scroll-content {
+      padding: 44px 44px 48px;
+    }
+    @media (max-width: 680px) {
+      .inner-scroll-content { padding: 28px 24px 36px; }
+      .card-container { max-height: calc(100vh - 160px); }
+    }
+
+    .form-intro {
+      background: linear-gradient(135deg, #fff6e8, #fff0df);
+      border-left: 6px solid var(--brand-red);
+      padding: 20px 28px;
+      border-radius: 32px;
+      margin-bottom: 32px;
+    }
+    .form-intro h3 { color: var(--brand-dark); font-weight: 800; margin-bottom: 8px; }
+    .form-intro p { color: #2d3a5e; line-height: 1.5; }
+
+    .form-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-group label {
+      font-weight: 700;
+      color: var(--brand-dark);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 14px 18px;
+      border-radius: 20px;
+      border: 2px solid #e2edf7;
+      background: #FEFEFE;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--brand-red);
+      box-shadow: 0 0 0 3px rgba(177, 18, 23, 0.15);
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    .instructions {
+      font-size: 0.75rem;
+      color: #6c7a8e;
+    }
+    .error-text {
+      color: var(--brand-red);
+      font-size: 0.75rem;
+      font-weight: 500;
+      min-height: 20px;
+    }
+
+    .help-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 12px 0 8px;
+    }
+    .help-card {
+      background: #F9FAFE;
+      border-radius: 24px;
+      padding: 18px;
+      border: 1px solid #eef2fa;
+      transition: 0.2s;
+    }
+    .help-card strong { color: var(--brand-red); display: block; margin-bottom: 6px; }
+    .help-card p { font-size: 0.8rem; color: #4b5a72; }
+
+    /* Submit section always visible at bottom of scrollable area */
+    .submit-section {
+      display: flex;
+      gap: 20px;
+      margin-top: 32px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      position: sticky;
+      bottom: 0;
+      background: transparent;
+      padding: 8px 0 0;
+    }
+    .submit-btn {
+      flex: 2;
+      background: linear-gradient(95deg, var(--brand-red), #8f0e12);
+      border: none;
+      border-radius: 60px;
+      padding: 16px 24px;
+      font-weight: 800;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      box-shadow: 0 6px 14px rgba(177,18,23,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(177,18,23,0.3); }
+    .cancel-btn {
+      flex: 1;
+      background: #f1f5f9;
+      border: none;
+      border-radius: 60px;
+      padding: 16px 24px;
+      font-weight: 700;
+      color: var(--brand-dark);
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: 0.2s;
+    }
+    .cancel-btn:hover { background: #e2e8f0; }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .success-panel {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+      background: #f4faf7;
+      border-radius: 40px;
+      margin: 20px 0;
+      animation: fadeScale 0.4s ease;
+    }
+    .success-panel.show { display: block; }
+    .success-icon { font-size: 4rem; margin-bottom: 16px; color: #15803d; }
+    .redirect-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--brand-dark);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 60px;
+      margin-top: 24px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .disclaimer {
+      background: #fff3e3;
+      border-radius: 24px;
+      padding: 20px 24px;
+      margin-top: 32px;
+      border-left: 5px solid var(--brand-red);
+      font-size: 0.85rem;
+      color: #4a3b1f;
+    }
+    footer {
+      background: var(--brand-dark);
+      color: #b9c3da;
+      padding: 40px 24px;
+      text-align: center;
+      margin-top: 0;
+    }
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @media (max-width: 740px) {
+      .field-row { grid-template-columns: 1fr; gap: 18px; }
+      .help-grid { grid-template-columns: 1fr; }
+      .navbar { padding: 12px 20px; }
+      .hero-section { padding: 110px 20px 40px; }
+      .inner-scroll-content { padding: 24px 20px 32px; }
+      .submit-btn, .cancel-btn { padding: 14px 18px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="navbar">
+    <a href="index.html" class="brand"><i class="fas fa-shield-alt"></i> CommitteeHub</a>
+    <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
+  </div>
+</header>
+
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fas fa-rocket"></i> Launch Your Savings Circle</div>
+    <h1 class="hero-title">Start Your Committee <span>Today</span></h1>
+    <p class="hero-copy">Create a trusted committee and connect with verified members. Our team reviews and publishes your listing within 24 hours — fast, secure, and community-first.</p>
+  </div>
+</section>
+
+<main>
+  <div class="card-container" id="scrollableCard">
+    <div class="inner-scroll-content">
+      <div class="form-intro">
+        <h3><i class="fas fa-lightbulb"></i> Before You Begin</h3>
+        <p>Ensure your committee has clear rules, payment schedule and transparency. Well‑structured committees attract serious participants. Our admin team will assist in verification.</p>
+      </div>
+
+      <form id="committeeForm" novalidate>
+        <div class="form-grid">
+          <div class="field-row">
+            <div class="form-group">
+              <label><i class="fas fa-user-circle"></i> Organizer Full Name</label>
+              <input id="organizerName" type="text" placeholder="Muhammad Hassan Raza" required />
+              <span class="error-text" id="errorOrganizer"></span>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-tag"></i> Committee Name</label>
+              <input id="committeeName" type="text" placeholder="Lahore Executive Circle" required />
+              <span class="error-text" id="errorCommitteeName"></span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="form-group">
+              <label><i class="fas fa-rupee-sign"></i> Monthly Amount (PKR)</label>
+              <input id="monthlyAmount" type="number" min="500" max="1000000" placeholder="5000" required />
+              <span class="instructions">Min ₨ 500 – Max ₨ 1,000,000</span>
+              <span class="error-text" id="errorAmount"></span>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-users"></i> Total Members (Slots)</label>
+              <input id="totalMembers" type="number" min="2" max="100" placeholder="12" required />
+              <span class="instructions">2 to 100 members</span>
+              <span class="error-text" id="errorMembers"></span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="form-group">
+              <label><i class="fas fa-calendar-alt"></i> Duration (Months)</label>
+              <input id="duration" type="number" min="2" max="36" placeholder="12" required />
+              <span class="instructions">2 – 36 months cycle</span>
+              <span class="error-text" id="errorDuration"></span>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-map-marker-alt"></i> City / Location</label>
+              <select id="city" required>
+                <option value="">Select City</option>
+                <option value="Karachi">Karachi</option><option value="Lahore">Lahore</option><option value="Islamabad">Islamabad</option>
+                <option value="Peshawar">Peshawar</option><option value="Quetta">Quetta</option><option value="Faisalabad">Faisalabad</option>
+                <option value="Rawalpindi">Rawalpindi</option><option value="Multan">Multan</option><option value="Hyderabad">Hyderabad</option>
+                <option value="Abbottabad">Abbottabad</option><option value="Sialkot">Sialkot</option><option value="Gujranwala">Gujranwala</option>
+                <option value="Sukkur">Sukkur</option><option value="Bahawalpur">Bahawalpur</option><option value="Mirpur Khas">Mirpur Khas</option>
+              </select>
+              <span class="error-text" id="errorCity"></span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="form-group">
+              <label><i class="fas fa-phone-alt"></i> Contact Phone Number</label>
+              <input id="phone" type="tel" placeholder="03XX-XXXXXXX" required />
+              <span class="instructions">Format: 03XX-XXXXXXX (Pakistani number)</span>
+              <span class="error-text" id="errorPhone"></span>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-info-circle"></i> Committee Overview (tagline)</label>
+              <input id="shortDesc" type="text" placeholder="E.g., Family-friendly savings circle" />
+              <span class="instructions">Short tagline (optional)</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label><i class="fas fa-file-alt"></i> Full Description & Rules</label>
+            <textarea id="description" maxlength="600" placeholder="Describe payment schedule, member responsibilities, dispute policy, and any special terms. Be precise and transparent." required></textarea>
+            <span class="instructions"><span id="charCount">0</span>/600 characters</span>
+            <span class="error-text" id="errorDescription"></span>
+          </div>
+
+          <div class="help-grid">
+            <div class="help-card"><strong><i class="fas fa-wallet"></i> Payment Schedule</strong><p>Define monthly collection day & distribution cycle.</p></div>
+            <div class="help-card"><strong><i class="fas fa-shield-alt"></i> Dispute Handling</strong><p>Explain how conflicts will be resolved among members.</p></div>
+            <div class="help-card"><strong><i class="fas fa-check-circle"></i> Eligibility</strong><p>Who can join? Any city/residency conditions?</p></div>
+          </div>
+        </div>
+
+        <!-- SUBMIT BUTTONS SECTION - always visible inside scrollable container -->
+        <div class="submit-section">
+          <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Submit for Review</button>
+          <a href="index.html" class="cancel-btn"><i class="fas fa-times"></i> Cancel</a>
+        </div>
+      </form>
+
+      <div class="success-panel" id="successPanel">
+        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+        <h3 style="font-weight:800;">Committee Submitted! 🎉</h3>
+        <p>Your committee has been received and forwarded to admin review. We'll verify and publish within 24 hours. You'll soon see your committee on the homepage after approval.</p>
+        <a href="index.html" class="redirect-btn"><i class="fas fa-home"></i> Return to Homepage</a>
+      </div>
+
+      <div class="disclaimer">
+        <strong><i class="fas fa-gavel"></i> Important Disclaimer:</strong>
+        <p>CommitteeHub acts only as a discovery platform. We do not facilitate any financial exchanges, guarantee member behavior, or assume liability for any disputes. All participants must conduct due diligence and sign local agreements before joining. Use at your own discretion.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 CommitteeHub — Pakistan's trusted committee network</p>
+</footer>
+
+<script>
+  // Storage helpers
+  const safeRead = key => {
+    try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch { return null; }
+  };
+  const safeWrite = (key, val) => {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) { console.warn(e); }
+  };
+  
+  const initStorage = () => {
+    const keys = ['pendingCommittees', 'approvedCommittees', 'rejectedCommittees', 'pendingUsers', 'approvedUsers', 'rejectedUsers', 'joinRequests'];
+    keys.forEach(k => { if (safeRead(k) === null) safeWrite(k, []); });
+  };
+  
+  // DOM Elements
+  const form = document.getElementById('committeeForm');
+  const successPanel = document.getElementById('successPanel');
+  const descField = document.getElementById('description');
+  const charSpan = document.getElementById('charCount');
+  const scrollableCard = document.getElementById('scrollableCard');
+  
+  // Char counter
+  if (descField) {
+    descField.addEventListener('input', () => {
+      charSpan.textContent = descField.value.length;
+    });
+    charSpan.textContent = descField.value.length;
+  }
+  
+  const clearErrors = () => {
+    document.querySelectorAll('.error-text').forEach(el => el.textContent = '');
+  };
+  
+  const validateForm = () => {
+    clearErrors();
+    let isValid = true;
+    
+    const organizer = document.getElementById('organizerName').value.trim();
+    const committeeName = document.getElementById('committeeName').value.trim();
+    const amount = parseFloat(document.getElementById('monthlyAmount').value);
+    const totalMembers = parseInt(document.getElementById('totalMembers').value);
+    const duration = parseInt(document.getElementById('duration').value);
+    const city = document.getElementById('city').value;
+    const phone = document.getElementById('phone').value.trim();
+    const description = document.getElementById('description').value.trim();
+    
+    if (!organizer || organizer.length < 3) {
+      document.getElementById('errorOrganizer').textContent = 'Full name required (min 3 characters)';
+      isValid = false;
+    }
+    if (!committeeName || committeeName.length < 3) {
+      document.getElementById('errorCommitteeName').textContent = 'Committee name should be at least 3 characters';
+      isValid = false;
+    }
+    if (isNaN(amount) || amount < 500) {
+      document.getElementById('errorAmount').textContent = 'Monthly amount must be at least ₨ 500';
+      isValid = false;
+    }
+    if (isNaN(totalMembers) || totalMembers < 2 || totalMembers > 100) {
+      document.getElementById('errorMembers').textContent = 'Members slots must be between 2 and 100';
+      isValid = false;
+    }
+    if (isNaN(duration) || duration < 2 || duration > 36) {
+      document.getElementById('errorDuration').textContent = 'Duration must be 2–36 months';
+      isValid = false;
+    }
+    if (!city) {
+      document.getElementById('errorCity').textContent = 'Please select a city';
+      isValid = false;
+    }
+    const phoneRegex = /^03\d{2}-\d{7}$/;
+    if (!phoneRegex.test(phone)) {
+      document.getElementById('errorPhone').textContent = 'Enter Pakistani number format: 03XX-XXXXXXX';
+      isValid = false;
+    }
+    if (!description || description.length < 25) {
+      document.getElementById('errorDescription').textContent = 'Please provide a detailed description (at least 25 characters)';
+      isValid = false;
+    }
+    return isValid;
+  };
+  
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      // Scroll to top of card to show errors clearly
+      if (scrollableCard) {
+        scrollableCard.scrollTop = 0;
+      }
+      return;
+    }
+    
+    const newCommittee = {
+      id: `comm_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
+      organizerName: document.getElementById('organizerName').value.trim(),
+      name: document.getElementById('committeeName').value.trim(),
+      amount: parseFloat(document.getElementById('monthlyAmount').value),
+      totalSlots: parseInt(document.getElementById('totalMembers').value),
+      filledSlots: 0,
+      duration: parseInt(document.getElementById('duration').value),
+      city: document.getElementById('city').value,
+      phone: document.getElementById('phone').value.trim(),
+      shortTag: document.getElementById('shortDesc').value.trim(),
+      description: document.getElementById('description').value.trim(),
+      organizerJoinDate: new Date().toISOString(),
+      status: 'pending'
+    };
+    
+    const pending = safeRead('pendingCommittees') || [];
+    pending.push(newCommittee);
+    safeWrite('pendingCommittees', pending);
+    
+    // Show success UI
+    form.style.display = 'none';
+    successPanel.classList.add('show');
+    
+    // ensure scrollable card scrolls to success panel smoothly
+    if (scrollableCard && successPanel) {
+      setTimeout(() => {
+        successPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 80);
+    }
+    
+    // Auto redirect after 3 seconds
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 3200);
+  });
+  
+  // initialize storage and ensure submit button is visible
+  window.addEventListener('DOMContentLoaded', () => {
+    initStorage();
+    // extra fix: force scrollable container height to ensure button visible
+    if (scrollableCard) {
+      const updateHeight = () => {
+        const windowHeight = window.innerHeight;
+        const cardTop = scrollableCard.getBoundingClientRect().top;
+        const available = windowHeight - cardTop - 40;
+        if (available > 300) {
+          scrollableCard.style.maxHeight = `${Math.min(available, 650)}px`;
+        } else {
+          scrollableCard.style.maxHeight = `480px`;
+        }
+      };
+      updateHeight();
+      window.addEventListener('resize', updateHeight);
+    }
+  });
+</script>
+</body>
+</html>

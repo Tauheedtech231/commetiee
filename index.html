@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HalaCircle — Pakistan's Most Trusted Committee Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: #F4F6F8;
+      color: #0B1C3D;
+      overflow-x: hidden;
+    }
+
+    :root {
+      --darkNavy: #0B1C3D;
+      --deepRed: #B11217;
+      --white: #FFFFFF;
+      --lightGrey: #F4F6F8;
+      --shadow-xl: 0 25px 40px -12px rgba(0, 0, 0, 0.15);
+      --transition-smooth: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 24px;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .navbar {
+      pointer-events: auto;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border-radius: 80px;
+      padding: 10px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 90%;
+      max-width: 1300px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(177, 18, 23, 0.15);
+    }
+
+    .brand {
+      font-size: 1.7rem;
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--deepRed), #a00f13);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--darkNavy);
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: var(--transition-smooth);
+    }
+
+    .nav-links a:hover {
+      color: var(--deepRed);
+    }
+
+    .btn {
+      padding: 8px 22px;
+      border-radius: 60px;
+      font-weight: 800;
+      transition: var(--transition-smooth);
+      border: none;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--deepRed);
+      color: var(--deepRed);
+    }
+
+    .btn-primary {
+      background: var(--deepRed);
+      color: white;
+      box-shadow: 0 5px 12px rgba(177, 18, 23, 0.3);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      color: white;
+      text-align: center;
+      padding: 140px 24px 90px;
+      overflow: hidden;
+      border-radius: 0 0 48px 48px;
+      background: #0a1a35;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://images.pexels.com/photos/4386367/pexels-photo-4386367.jpeg?auto=compress&cs=tinysrgb&w=1600');
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      z-index: 0;
+      transition: transform 0.3s ease-out;
+    }
+
+    .hero:hover .hero-bg {
+      transform: scale(1.03);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      color: #ffd4d4;
+      border-bottom: 3px solid var(--deepRed);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 36px;
+    }
+
+    .search-panel {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+      background: white;
+      border-radius: 80px;
+      padding: 6px;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .search-panel input {
+      flex: 1;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 80px;
+      outline: none;
+      font-size: 1rem;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 500;
+    }
+
+    .search-panel button {
+      padding: 14px 34px;
+      border-radius: 80px;
+      background: var(--deepRed);
+      color: white;
+      border: none;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 64px;
+      margin-top: 52px;
+    }
+
+    .stat strong {
+      font-size: 2rem;
+      display: block;
+      font-weight: 800;
+    }
+
+    /* Section */
+    .section {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 32px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* CAROUSEL - Arrow controlled, no auto scroll */
+    .carousel-outer {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 32px;
+      padding: 20px 0;
+      background: transparent;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 24px;
+      transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      will-change: transform;
+    }
+
+    /* Compact Committee Card */
+    .committee-card-compact {
+      flex: 0 0 270px;
+      background: var(--white);
+      border-radius: 28px;
+      padding: 18px 16px;
+      position: relative;
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .committee-card-compact:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px -12px rgba(177, 18, 23, 0.2);
+    }
+
+    .trust-badge-sm {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      backdrop-filter: blur(2px);
+    }
+
+    .badge-fresher { background: #ffefef; color: var(--deepRed); }
+    .badge-verified { background: #e3f0ff; color: #0a5c8e; }
+
+    .organizer-sm {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .avatar-sm {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(145deg, var(--deepRed), #8b0e12);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .committee-name-sm {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--darkNavy);
+      line-height: 1.2;
+    }
+
+    .organizer-name-sm { font-size: 0.7rem; color: #5a6e8a; font-weight: 600; }
+    .amount-sm { font-size: 1.5rem; font-weight: 800; color: var(--deepRed); margin: 8px 0 6px; }
+    .amount-sm span { font-size: 0.7rem; font-weight: 600; }
+    .chips-sm { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .chip-sm { background: var(--lightGrey); padding: 3px 10px; border-radius: 40px; font-size: 0.65rem; font-weight: 700; }
+    .progress-sm { margin: 8px 0; }
+    .progress-labels-sm { display: flex; justify-content: space-between; font-size: 0.65rem; font-weight: 700; margin-bottom: 4px; }
+    .progress-bar-sm { background: #e2e8f0; height: 5px; border-radius: 12px; overflow: hidden; }
+    .progress-fill-sm { background: var(--deepRed); height: 100%; width: 0%; }
+    .card-footer-sm { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid #eeeef2; }
+    .status-sm { padding: 4px 12px; border-radius: 40px; font-size: 0.6rem; font-weight: 800; }
+    .status-open { background: #e6f4ea; color: #2d6a4f; }
+    .status-full { background: #ffe6e5; color: var(--deepRed); }
+    .request-btn-sm { background: var(--darkNavy); color: white; padding: 5px 16px; border-radius: 40px; border: none; font-weight: 800; font-size: 0.7rem; cursor: pointer; transition: 0.2s; font-family: 'Quicksand', sans-serif; }
+    .request-btn-sm:hover { background: var(--deepRed); }
+
+    /* Slider Controls */
+    .slider-controls {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .slider-arrow {
+      background: var(--white);
+      border: none;
+      width: 52px;
+      height: 52px;
+      border-radius: 60px;
+      font-size: 1.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+      color: var(--deepRed);
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slider-arrow:hover {
+      background: var(--deepRed);
+      color: white;
+      transform: scale(1.06);
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      background: white;
+      padding: 14px 24px;
+      border-radius: 80px;
+      margin-bottom: 32px;
+      align-items: center;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+    }
+    .filters select, .filters button { padding: 8px 20px; border-radius: 60px; border: 1px solid #e2e8f0; font-weight: 700; background: white; cursor: pointer; font-family: 'Quicksand', sans-serif; font-size: 0.8rem; }
+    .btn-clear { background: #f1f5f9; color: var(--darkNavy); }
+    .btn-create { background: var(--deepRed); color: white; padding: 10px 24px; border-radius: 60px; font-weight: 800; border: none; cursor: pointer; }
+
+    /* JOURNEY SECTION */
+    .journey-section {
+      background: linear-gradient(120deg, #0B1C3D 0%, #142c55 100%);
+      border-radius: 48px;
+      padding: 60px 40px;
+      margin: 20px auto;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .journey-section::before {
+      content: "✨";
+      position: absolute;
+      font-size: 280px;
+      opacity: 0.05;
+      bottom: -40px;
+      right: -30px;
+      pointer-events: none;
+    }
+    .journey-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .journey-header h2 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 12px;
+    }
+    .journey-header p {
+      font-size: 1rem;
+      opacity: 0.85;
+    }
+    .journey-timeline {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      position: relative;
+      z-index: 2;
+    }
+    .journey-step {
+      flex: 1;
+      min-width: 200px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(4px);
+      border-radius: 32px;
+      padding: 28px 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .journey-step:hover {
+      transform: translateY(-8px);
+      background: rgba(255,255,255,0.15);
+      border-color: var(--deepRed);
+    }
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: var(--deepRed);
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.3rem;
+      margin: 0 auto 18px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+    }
+    .journey-step h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .journey-step p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      line-height: 1.4;
+    }
+    .journey-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    /* PREMIUM FOOTER */
+    .premium-footer {
+      background: #07142b;
+      color: #b9c7db;
+      padding: 60px 32px 32px;
+      border-radius: 48px 48px 0 0;
+      margin-top: 40px;
+    }
+    .footer-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 48px;
+    }
+    .footer-brand h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--deepRed), #ff6b6b);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 16px;
+    }
+    .footer-brand p {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      opacity: 0.8;
+    }
+    .footer-links h4, .footer-contact h4 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: white;
+      letter-spacing: 0.5px;
+    }
+    .footer-links ul, .footer-contact ul {
+      list-style: none;
+    }
+    .footer-links li, .footer-contact li {
+      margin-bottom: 12px;
+    }
+    .footer-links a {
+      text-decoration: none;
+      color: #b9c7db;
+      transition: 0.2s;
+      font-size: 0.85rem;
+    }
+    .footer-links a:hover {
+      color: var(--deepRed);
+      padding-left: 5px;
+    }
+    .social-icons {
+      display: flex;
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .social-icons a {
+      color: white;
+      background: rgba(255,255,255,0.1);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+      font-size: 1.1rem;
+    }
+    .social-icons a:hover {
+      background: var(--deepRed);
+      transform: translateY(-3px);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 48px;
+      margin-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.75rem;
+    }
+
+    /* MODAL - Fully Responsive */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 28, 61, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: white;
+      border-radius: 40px;
+      max-width: 550px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 32px 28px;
+      animation: floatUp 0.3s ease;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+    }
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .modal-content h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 24px;
+      color: var(--darkNavy);
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      font-weight: 800;
+      margin-bottom: 8px;
+      display: block;
+      font-size: 0.85rem;
+      color: var(--darkNavy);
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 28px;
+      border: 1.5px solid #e2e8f0;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--deepRed);
+    }
+    .checkbox-group {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+    .btn-cancel {
+      background: #e2e8f0;
+      color: var(--darkNavy);
+      padding: 10px 24px;
+      border-radius: 40px;
+      border: none;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .btn-submit {
+      background: var(--deepRed);
+      color: white;
+      padding: 10px 28px;
+      border-radius: 40px;
+      border: none;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--darkNavy);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 70px;
+      z-index: 1200;
+      opacity: 0;
+      transition: opacity 0.25s;
+      font-weight: 700;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+    
+    @media (max-width: 800px) {
+      .navbar { width: 94%; padding: 8px 16px; }
+      .nav-links { gap: 18px; display: none; }
+      .nav-links { display: flex; gap: 12px; }
+      .hero h1 { font-size: 2.2rem; }
+      .committee-card-compact { flex: 0 0 260px; }
+      .journey-timeline { flex-direction: column; }
+      .footer-container { gap: 32px; }
+      .modal-content { padding: 24px 20px; }
+      .modal-content h2 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <a href="#" class="brand">🟡 HalaCircle</a>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#browse">Browse</a>
+      <a href="#journey">Journey</a>
+      <a href="#" id="createCommitteeNavBtn">Create Committee</a>
+      <a href="admin.html">Admin</a>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <button class="btn btn-outline" onclick="location.href='admin.html'">Login</button>
+      <button class="btn btn-primary" onclick="location.href='signup.html'">Register</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>Find Trusted Committees <span>Near You</span></h1>
+      <p>Join verified committees run by trusted organizers across Pakistan</p>
+      <div class="search-panel">
+        <input type="text" id="searchInput" placeholder="Search by name, city or amount...">
+        <button id="searchBtn">🔍 Search</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong id="totalCommittees">0</strong><span>Committees</span></div>
+        <div class="stat"><strong id="totalMembers">0</strong><span>Members</span></div>
+        <div class="stat"><strong id="totalCities">0</strong><span>Cities</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="browse">
+    <div class="section-header">
+      <h2>🔄 Committees Carousel</h2>
+      <div style="display: flex; gap: 14px;">
+        <button class="btn-create" id="createCommitteeBtn">➕ Create Committee</button>
+        <button class="btn-clear" id="clearFiltersBtn">🗑️ Clear Filters</button>
+      </div>
+    </div>
+    <div class="filters">
+      <select id="budgetFilter"><option value="">All Budgets</option><option value="under2000">Under ₨ 2,000</option><option value="2000-5000">₨ 2k - 5k</option><option value="above5000">Above ₨ 5k</option></select>
+      <select id="cityFilter"><option value="">All Cities</option><option value="Karachi">Karachi</option><option value="Lahore">Lahore</option><option value="Islamabad">Islamabad</option><option value="Peshawar">Peshawar</option><option value="Quetta">Quetta</option><option value="Faisalabad">Faisalabad</option><option value="Rawalpindi">Rawalpindi</option><option value="Multan">Multan</option></select>
+      <select id="trustFilter"><option value="">All Trust Levels</option><option value="fresher">Fresher</option><option value="verified">Verified</option></select>
+      <select id="statusFilter"><option value="">All Status</option><option value="open">Open</option><option value="full">Full</option></select>
+      <div id="resultCount" style="margin-left: auto; font-weight: 700;">Showing 0 committees</div>
+    </div>
+
+    <!-- Arrow-controlled carousel (no auto scroll) -->
+    <div class="carousel-outer">
+      <div class="carousel-track" id="carouselTrack"></div>
+    </div>
+    <div class="slider-controls">
+      <button class="slider-arrow" id="prevSlideBtn">←</button>
+      <button class="slider-arrow" id="nextSlideBtn">→</button>
+    </div>
+  </section>
+
+  <!-- JOURNEY SECTION -->
+  <section id="journey" class="section">
+    <div class="journey-section">
+      <div class="journey-header">
+        <h2>Your Journey with HalaCircle</h2>
+        <p>Start, grow, and succeed — every step is crafted for trust & transparency</p>
+      </div>
+      <div class="journey-timeline">
+        <div class="journey-step"><div class="step-number">1</div><div class="journey-icon">📝</div><h3>Join the Circle</h3><p>Sign up in seconds and explore verified committees near you.</p></div>
+        <div class="journey-step"><div class="step-number">2</div><div class="journey-icon">🔍</div><h3>Discover & Match</h3><p>Use smart filters to find committees that match your city & budget.</p></div>
+        <div class="journey-step"><div class="step-number">3</div><div class="journey-icon">🤝</div><h3>Secure Joining</h3><p>Send a request, connect with organizers, and become a member.</p></div>
+        <div class="journey-step"><div class="step-number">4</div><div class="journey-icon">🏆</div><h3>Grow Together</h3><p>Build savings, earn trust badges, and create your own committee.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="premium-footer">
+  <div class="footer-container">
+    <div class="footer-brand"><h3>🟡 HalaCircle</h3><p>Pakistan's most trusted committee platform, connecting people with safe, transparent savings circles.</p><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a></div></div>
+    <div class="footer-links"><h4>Explore</h4><ul><li><a href="#">Browse Committees</a></li><li><a href="#">Create Committee</a></li><li><a href="#">Trust & Safety</a></li><li><a href="#">Success Stories</a></li></ul></div>
+    <div class="footer-links"><h4>Support</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">FAQs</a></li><li><a href="#">Community Guidelines</a></li><li><a href="#">Report an Issue</a></li></ul></div>
+    <div class="footer-contact"><h4>Contact</h4><ul><li><i class="fas fa-envelope"></i> support@halacircle.pk</li><li><i class="fas fa-phone-alt"></i> +92 300 123 4567</li><li><i class="fas fa-map-marker-alt"></i> Lahore, Pakistan</li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 HalaCircle — Empowering Communities. All rights reserved. | ⚠️ Listing platform only. Verify before transactions.</p></div>
+</footer>
+
+<!-- Modals -->
+<div class="modal" id="joinModal"><div class="modal-content"><div id="modalFormView"><h2>Join Committee</h2><div id="modalCommitteeName" style="color:#B11217; margin-bottom:16px;"></div><div class="form-group"><label>Your Name</label><input id="requestName"></div><div class="form-group"><label>Phone</label><input id="requestPhone"></div><div class="form-group"><label>City</label><input id="requestCity"></div><div class="checkbox-group"><input type="checkbox" id="disclaimerCheck"><label>I understand HalaCircle is a listing platform</label></div><div class="modal-buttons"><button class="btn-cancel" id="cancelModalBtn">Cancel</button><button class="btn-submit" id="submitRequestBtn" disabled>Send Request</button></div></div><div id="modalSuccessView" style="display:none; text-align:center;"><div style="font-size:3rem;">✅</div><h3>Request Sent!</h3><button class="btn-primary" id="closeSuccessBtn">Close</button></div></div></div>
+
+<div class="modal" id="createCommitteeModal"><div class="modal-content"><h2>✨ Create New Committee</h2><div class="form-group"><label>Committee Name</label><input id="commName" placeholder="e.g., Karachi Gold Committee"></div><div class="form-group"><label>Organizer Name</label><input id="commOrganizer" placeholder="Full name"></div><div class="form-group"><label>Monthly Amount (₨)</label><input id="commAmount" type="number" placeholder="500 - 50000"></div><div class="form-group"><label>City</label><select id="commCity"><option value="">Select City</option><option>Karachi</option><option>Lahore</option><option>Islamabad</option><option>Peshawar</option><option>Quetta</option><option>Faisalabad</option><option>Rawalpindi</option><option>Multan</option></select></div><div class="form-group"><label>Total Slots (min 4)</label><input id="commTotalSlots" type="number" placeholder="e.g., 10"></div><div class="form-group"><label>Duration (months)</label><input id="commDuration" type="number" placeholder="min 3 months"></div><div class="checkbox-group"><input type="checkbox" id="createDisclaimer"><label>✓ I confirm all information is accurate</label></div><div class="modal-buttons"><button class="btn-cancel" id="cancelCreateBtn">Cancel</button><button class="btn-submit" id="submitCreateBtn">Create Committee</button></div></div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  function getStorage(k) { const d = localStorage.getItem(k); return d ? JSON.parse(d) : null; }
+  function setStorage(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+
+  function generateDefaultCommittees() {
+    const cities = ['Karachi','Lahore','Islamabad','Peshawar','Quetta','Faisalabad','Rawalpindi','Multan'];
+    const orgs = ['Ahmed Khan','Fatima Malik','Usman Ali','Zara Sheikh','Bilal Chaudhry','Amna Butt','Tariq Mehmood','Sana Iqbal'];
+    let arr = [];
+    for(let i=1;i<=28;i++) {
+      const amount = [1200,1800,2500,3200,4000,5000][i%6];
+      const city = cities[i%cities.length];
+      const organizer = orgs[i%orgs.length];
+      const totalSlots = 8 + (i%10);
+      const filledSlots = Math.floor(Math.random() * (totalSlots+1));
+      const status = filledSlots === totalSlots ? 'full' : 'open';
+      const daysOld = i<15 ? Math.floor(Math.random()*25)+5 : Math.floor(Math.random()*180)+30;
+      arr.push({ id:`comm-${i+500}`, name:`${city} ${['Care','Unity','Barakah','Meeti'][i%4]} Committee`, organizerName:organizer, amount, totalSlots, filledSlots, duration:8+(i%12), city, status, organizerJoinDate: new Date(Date.now()-daysOld*86400000).toISOString() });
+    }
+    return arr;
+  }
+
+  function initData() {
+    if(!getStorage('approvedCommittees')) setStorage('approvedCommittees', generateDefaultCommittees());
+    if(!getStorage('joinRequests')) setStorage('joinRequests', []);
+    if(!getStorage('currentUser')) setStorage('currentUser', { id:'user-1', name:'Ali Raza', phone:'0300-1234567', city:'Karachi' });
+  }
+
+  function getTrustBadge(joinDate) {
+    if(!joinDate) return { class:'badge-fresher', label:'🔴 Fresher' };
+    const days = (Date.now() - new Date(joinDate))/86400000;
+    return days < 30 ? { class:'badge-fresher', label:'🔴 Fresher' } : { class:'badge-verified', label:'🔵 Verified' };
+  }
+
+  let allCommittees = [];
+  let filteredList = [];
+  let currentIndex = 0;
+  let slidesToShow = 3;
+
+  function updateSlidesToShow() { slidesToShow = window.innerWidth <= 800 ? 1 : (window.innerWidth <= 1100 ? 2 : 3); }
+
+  function renderCarousel() {
+    const track = document.getElementById('carouselTrack');
+    if(!track) return;
+    updateSlidesToShow();
+    if(filteredList.length === 0) { track.innerHTML = `<div style="padding:80px; text-align:center; width:100%;">✨ No committees match filters</div>`; return; }
+    const maxStart = Math.max(0, filteredList.length - slidesToShow);
+    if(currentIndex > maxStart) currentIndex = maxStart;
+    if(currentIndex < 0) currentIndex = 0;
+    const visibleItems = filteredList.slice(currentIndex, currentIndex + slidesToShow);
+    track.innerHTML = visibleItems.map(comm => {
+      const badge = getTrustBadge(comm.organizerJoinDate);
+      const percent = (comm.filledSlots/comm.totalSlots)*100;
+      return `<div class="committee-card-compact">
+        <div class="trust-badge-sm ${badge.class}">${badge.label}</div>
+        <div class="organizer-sm"><div class="avatar-sm">${comm.organizerName.charAt(0)}</div><div><div class="committee-name-sm">${escapeHtml(comm.name)}</div><div class="organizer-name-sm">by ${escapeHtml(comm.organizerName)}</div></div></div>
+        <div class="amount-sm">₨ ${comm.amount.toLocaleString()}<span>/mo</span></div>
+        <div class="chips-sm"><div class="chip-sm">📍 ${comm.city}</div><div class="chip-sm">👥 ${comm.filledSlots}/${comm.totalSlots}</div><div class="chip-sm">📅 ${comm.duration}m</div></div>
+        <div class="progress-sm"><div class="progress-labels-sm"><span>Filled</span><span>${comm.totalSlots-comm.filledSlots} left</span></div><div class="progress-bar-sm"><div class="progress-fill-sm" style="width:${percent}%"></div></div></div>
+        <div class="card-footer-sm"><div class="status-sm status-${comm.status}">${comm.status === 'open' ? '● OPEN' : '● FULL'}</div><button class="request-btn-sm" data-id="${comm.id}" data-name="${escapeHtml(comm.name)}">Join →</button></div>
+      </div>`;
+    }).join('');
+    document.querySelectorAll('.request-btn-sm').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); openJoinModal(btn.dataset.id, btn.dataset.name); }));
+  }
+
+  function nextSlide() {
+    if(filteredList.length <= slidesToShow) return;
+    let maxStart = Math.max(0, filteredList.length - slidesToShow);
+    if(currentIndex + 1 <= maxStart) currentIndex++;
+    else currentIndex = 0;
+    renderCarousel();
+  }
+  function prevSlide() {
+    if(filteredList.length <= slidesToShow) return;
+    if(currentIndex - 1 >= 0) currentIndex--;
+    else currentIndex = Math.max(0, filteredList.length - slidesToShow);
+    renderCarousel();
+  }
+
+  function updateFilteredList() {
+    const committees = getStorage('approvedCommittees') || [];
+    allCommittees = committees;
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const budget = document.getElementById('budgetFilter').value;
+    const cityF = document.getElementById('cityFilter').value;
+    const trustF = document.getElementById('trustFilter').value;
+    const statusF = document.getElementById('statusFilter').value;
+    let filtered = committees.filter(c => {
+      if(search && !c.name.toLowerCase().includes(search) && !c.organizerName.toLowerCase().includes(search) && !c.city.toLowerCase().includes(search)) return false;
+      if(budget==='under2000' && c.amount>=2000) return false;
+      if(budget==='2000-5000' && (c.amount<2000 || c.amount>5000)) return false;
+      if(budget==='above5000' && c.amount<=5000) return false;
+      if(cityF && c.city !== cityF) return false;
+      if(trustF) { const badge = getTrustBadge(c.organizerJoinDate); if(trustF==='verified' && badge.label !== '🔵 Verified') return false; if(trustF==='fresher' && badge.label !== '🔴 Fresher') return false; }
+      if(statusF && c.status !== statusF) return false;
+      return true;
+    });
+    filteredList = filtered;
+    currentIndex = 0;
+    const totalMembers = allCommittees.reduce((s,c)=>s+c.filledSlots,0);
+    const uniqueCities = [...new Set(allCommittees.map(c=>c.city))];
+    document.getElementById('totalCommittees').innerHTML = allCommittees.length;
+    document.getElementById('totalMembers').innerHTML = totalMembers;
+    document.getElementById('totalCities').innerHTML = uniqueCities.length;
+    document.getElementById('resultCount').innerHTML = `Showing ${filtered.length} of ${allCommittees.length} committees`;
+    renderCarousel();
+  }
+
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m=>({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+
+  let joinCommId = null;
+  function openJoinModal(id, name) { const user = getStorage('currentUser'); if(!user){ showToast('Login required',true); setTimeout(()=>location.href='admin.html',800); return; } joinCommId = id; document.getElementById('modalCommitteeName').innerHTML = name; document.getElementById('modalFormView').style.display = 'block'; document.getElementById('modalSuccessView').style.display = 'none'; document.getElementById('requestName').value = user.name||''; document.getElementById('requestPhone').value = user.phone||''; document.getElementById('requestCity').value = user.city||''; document.getElementById('disclaimerCheck').checked = false; document.getElementById('submitRequestBtn').disabled = true; document.getElementById('joinModal').classList.add('active'); }
+  function closeJoinModal() { document.getElementById('joinModal').classList.remove('active'); joinCommId=null; }
+  function submitJoinRequest() { if(!joinCommId) return; if(!document.getElementById('disclaimerCheck').checked) { showToast('Accept disclaimer',true); return; } const name = document.getElementById('requestName').value.trim(); const phone = document.getElementById('requestPhone').value.trim(); if(!name||!phone) { showToast('Name & phone required',true); return; } const requests = getStorage('joinRequests')||[]; requests.push({ id:'req_'+Date.now(), committeeId:joinCommId, userName:name, userPhone:phone, userCity:document.getElementById('requestCity').value, requestDate:new Date().toISOString() }); setStorage('joinRequests',requests); document.getElementById('modalFormView').style.display = 'none'; document.getElementById('modalSuccessView').style.display = 'block'; showToast('Request sent!'); }
+  function createCommitteeModal() { const user=getStorage('currentUser'); if(!user){ showToast('Login needed',true); return; } document.getElementById('commName').value=''; document.getElementById('commOrganizer').value=user.name||''; document.getElementById('commAmount').value=''; document.getElementById('commCity').value=''; document.getElementById('commTotalSlots').value=''; document.getElementById('commDuration').value=''; document.getElementById('createDisclaimer').checked=false; document.getElementById('createCommitteeModal').classList.add('active'); }
+  function closeCreate() { document.getElementById('createCommitteeModal').classList.remove('active'); }
+  function submitCreate() { const name=document.getElementById('commName').value.trim(); const org=document.getElementById('commOrganizer').value.trim(); const amount=parseInt(document.getElementById('commAmount').value); const city=document.getElementById('commCity').value; const slots=parseInt(document.getElementById('commTotalSlots').value); const dur=parseInt(document.getElementById('commDuration').value); if(!name||!org||!amount||amount<500||!city||!slots||slots<4||!dur||dur<3) { showToast('All fields required. Min amount 500, slots min 4, duration min 3',true); return; } if(!document.getElementById('createDisclaimer').checked) { showToast('Confirm accuracy',true); return; } const committees = getStorage('approvedCommittees')||[]; committees.push({ id:'comm-'+Date.now()+'-'+Math.random().toString(36).substr(2,5), name, organizerName:org, amount, totalSlots:slots, filledSlots:1, duration:dur, city, status:'open', organizerJoinDate:new Date().toISOString() }); setStorage('approvedCommittees', committees); closeCreate(); updateFilteredList(); showToast('Committee created!'); }
+  function showToast(msg, err=false){ const t=document.getElementById('toast'); t.textContent=msg; t.style.background=err? '#B11217':'#0B1C3D'; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
+  function clearAllFilters(){ document.getElementById('searchInput').value=''; document.getElementById('budgetFilter').value=''; document.getElementById('cityFilter').value=''; document.getElementById('trustFilter').value=''; document.getElementById('statusFilter').value=''; updateFilteredList(); }
+
+  function setupEvents() {
+    document.getElementById('searchBtn').addEventListener('click',updateFilteredList);
+    document.getElementById('searchInput').addEventListener('input',updateFilteredList);
+    ['budgetFilter','cityFilter','trustFilter','statusFilter'].forEach(id=>document.getElementById(id).addEventListener('change',updateFilteredList));
+    document.getElementById('clearFiltersBtn').addEventListener('click',clearAllFilters);
+    document.getElementById('createCommitteeBtn').addEventListener('click',createCommitteeModal);
+    document.getElementById('createCommitteeNavBtn').addEventListener('click',(e)=>{e.preventDefault(); createCommitteeModal();});
+    document.getElementById('cancelModalBtn').addEventListener('click',closeJoinModal); document.getElementById('closeSuccessBtn').addEventListener('click',closeJoinModal);
+    document.getElementById('submitRequestBtn').addEventListener('click',submitJoinRequest);
+    document.getElementById('disclaimerCheck').addEventListener('change',(e)=>document.getElementById('submitRequestBtn').disabled=!e.target.checked);
+    document.getElementById('cancelCreateBtn').addEventListener('click',closeCreate); document.getElementById('submitCreateBtn').addEventListener('click',submitCreate);
+    document.getElementById('joinModal').addEventListener('click',(e)=>{if(e.target===document.getElementById('joinModal')) closeJoinModal();});
+    document.getElementById('createCommitteeModal').addEventListener('click',(e)=>{if(e.target===document.getElementById('createCommitteeModal')) closeCreate();});
+    document.getElementById('prevSlideBtn').addEventListener('click', prevSlide);
+    document.getElementById('nextSlideBtn').addEventListener('click', nextSlide);
+    window.addEventListener('resize', () => { renderCarousel(); });
+  }
+  document.addEventListener('DOMContentLoaded',()=>{ initData(); setupEvents(); updateFilteredList(); });
+</script>
+</body>
+</html>
