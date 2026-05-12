@@ -1,0 +1,130 @@
+<!-- Footer Section Component -->
+<style>
+  .premium-footer {
+    background: #07142b;
+    color: #b9c7db;
+    padding: 60px 32px 32px;
+    border-radius: 48px 48px 0 0;
+    margin-top: 40px;
+  }
+  .footer-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 48px;
+  }
+  .footer-brand h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #B11217, #ff6b6b);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 16px;
+  }
+  .footer-brand p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    opacity: 0.8;
+  }
+  .footer-links h4, .footer-contact h4 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  .footer-links ul, .footer-contact ul {
+    list-style: none;
+  }
+  .footer-links li, .footer-contact li {
+    margin-bottom: 12px;
+  }
+  .footer-links a {
+    text-decoration: none;
+    color: #b9c7db;
+    transition: 0.2s;
+    font-size: 0.85rem;
+  }
+  .footer-links a:hover {
+    color: #B11217;
+    padding-left: 5px;
+  }
+  .social-icons {
+    display: flex;
+    gap: 18px;
+    margin-top: 20px;
+  }
+  .social-icons a {
+    color: white;
+    background: rgba(255,255,255,0.1);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    font-size: 1.1rem;
+    text-decoration: none;
+  }
+  .social-icons a:hover {
+    background: #B11217;
+    transform: translateY(-3px);
+  }
+  .footer-bottom {
+    text-align: center;
+    padding-top: 48px;
+    margin-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.75rem;
+  }
+  @media (max-width: 800px) {
+    .footer-container { gap: 32px; }
+  }
+</style>
+
+<footer class="premium-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <h3>🟡 HalaCircle</h3>
+      <p>Pakistan's most trusted committee platform, connecting people with safe, transparent savings circles.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#">Browse Committees</a></li>
+        <li><a href="#">Create Committee</a></li>
+        <li><a href="#">Trust & Safety</a></li>
+        <li><a href="#">Success Stories</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Community Guidelines</a></li>
+        <li><a href="#">Report an Issue</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <ul>
+        <li><i class="fas fa-envelope"></i> support@halacircle.pk</li>
+        <li><i class="fas fa-phone-alt"></i> +92 300 123 4567</li>
+        <li><i class="fas fa-map-marker-alt"></i> Lahore, Pakistan</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 HalaCircle — Empowering Communities. All rights reserved. | ⚠️ Listing platform only. Verify before transactions.</p>
+  </div>
+</footer>

@@ -1,0 +1,135 @@
+<!-- Hero Section Component -->
+<style>
+  .hero {
+    position: relative;
+    color: white;
+    text-align: center;
+    padding: 140px 24px 90px;
+    overflow: hidden;
+    border-radius: 0 0 48px 48px;
+    background: #0a1a35;
+  }
+
+  .hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.pexels.com/photos/4386367/pexels-photo-4386367.jpeg?auto=compress&cs=tinysrgb&w=1600');
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    z-index: 0;
+    transition: transform 0.3s ease-out;
+  }
+
+  .hero:hover .hero-bg {
+    transform: scale(1.03);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+
+  .hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 span {
+    color: #ffd4d4;
+    border-bottom: 3px solid #B11217;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 36px;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 64px;
+    margin-top: 52px;
+  }
+
+  .stat strong {
+    font-size: 2rem;
+    display: block;
+    font-weight: 800;
+  }
+
+  @media (max-width: 800px) {
+    .hero h1 { font-size: 2.2rem; }
+    .hero-stats { gap: 32px; }
+  }
+</style>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <h1>Find Trusted Committees <span>Near You</span></h1>
+    <p>Join verified committees run by trusted organizers across Pakistan</p>
+    <div style="max-width:640px; margin:0 auto;">
+      <div style="display:flex; gap:12px; background:white; border-radius:80px; padding:6px; box-shadow:0 25px 40px -12px rgba(0,0,0,0.15);">
+        <input type="text" id="heroSearchInput" placeholder="Search by name, city or amount..." style="flex:1; padding:16px 24px; border:none; border-radius:80px; outline:none; font-size:1rem; font-family:'Quicksand',sans-serif; font-weight:500;">
+        <button id="heroSearchBtn" style="padding:14px 34px; border-radius:80px; background:#B11217; color:white; border:none; font-weight:800; cursor:pointer;">🔍 Search</button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong id="totalCommitteesHero">0</strong><span>Committees</span></div>
+      <div class="stat"><strong id="totalMembersHero">0</strong><span>Members</span></div>
+      <div class="stat"><strong id="totalCitiesHero">0</strong><span>Cities</span></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Hero section specific logic
+  function updateHeroStats() {
+    const committees = JSON.parse(localStorage.getItem('approvedCommittees') || '[]');
+    const totalMembers = committees.reduce((s,c) => s + (c.filledSlots || 0), 0);
+    const uniqueCities = [...new Set(committees.map(c => c.city))];
+    document.getElementById('totalCommitteesHero').innerHTML = committees.length;
+    document.getElementById('totalMembersHero').innerHTML = totalMembers;
+    document.getElementById('totalCitiesHero').innerHTML = uniqueCities.length;
+  }
+
+  // Listen for storage changes
+  window.addEventListener('storage', updateHeroStats);
+  
+  // Connect search to global filter if committees section is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    updateHeroStats();
+    
+    const heroSearchBtn = document.getElementById('heroSearchBtn');
+    const heroSearchInput = document.getElementById('heroSearchInput');
+    
+    if(heroSearchBtn && window.updateFilteredList) {
+      heroSearchBtn.addEventListener('click', () => {
+        const globalSearch = document.getElementById('searchInput');
+        if(globalSearch) {
+          globalSearch.value = heroSearchInput.value;
+          window.updateFilteredList();
+        }
+      });
+      
+      heroSearchInput.addEventListener('keypress', (e) => {
+        if(e.key === 'Enter' && window.updateFilteredList) {
+          const globalSearch = document.getElementById('searchInput');
+          if(globalSearch) {
+            globalSearch.value = heroSearchInput.value;
+            window.updateFilteredList();
+          }
+        }
+      });
+    }
+  });
+</script>

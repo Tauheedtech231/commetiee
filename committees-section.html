@@ -1,0 +1,249 @@
+<!-- Committees Section Component -->
+<style>
+  .section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 32px;
+  }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .section-header h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    font-family: 'Poppins', sans-serif;
+  }
+  .carousel-outer {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 32px;
+    padding: 20px 0;
+    background: transparent;
+  }
+  .carousel-track {
+    display: flex;
+    gap: 24px;
+    transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    will-change: transform;
+  }
+  .committee-card-compact {
+    flex: 0 0 270px;
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 18px 16px;
+    position: relative;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .committee-card-compact:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 30px -12px rgba(177, 18, 23, 0.2);
+  }
+  .trust-badge-sm {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 4px 12px;
+    border-radius: 40px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    backdrop-filter: blur(2px);
+  }
+  .badge-fresher { background: #ffefef; color: #B11217; }
+  .badge-verified { background: #e3f0ff; color: #0a5c8e; }
+  .organizer-sm { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .avatar-sm { width: 44px; height: 44px; background: linear-gradient(145deg, #B11217, #8b0e12); border-radius: 28px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 1.2rem; }
+  .committee-name-sm { font-size: 1rem; font-weight: 800; color: #0B1C3D; line-height: 1.2; }
+  .organizer-name-sm { font-size: 0.7rem; color: #5a6e8a; font-weight: 600; }
+  .amount-sm { font-size: 1.5rem; font-weight: 800; color: #B11217; margin: 8px 0 6px; }
+  .amount-sm span { font-size: 0.7rem; font-weight: 600; }
+  .chips-sm { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .chip-sm { background: #F4F6F8; padding: 3px 10px; border-radius: 40px; font-size: 0.65rem; font-weight: 700; }
+  .progress-sm { margin: 8px 0; }
+  .progress-labels-sm { display: flex; justify-content: space-between; font-size: 0.65rem; font-weight: 700; margin-bottom: 4px; }
+  .progress-bar-sm { background: #e2e8f0; height: 5px; border-radius: 12px; overflow: hidden; }
+  .progress-fill-sm { background: #B11217; height: 100%; width: 0%; }
+  .card-footer-sm { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid #eeeef2; }
+  .status-sm { padding: 4px 12px; border-radius: 40px; font-size: 0.6rem; font-weight: 800; }
+  .status-open { background: #e6f4ea; color: #2d6a4f; }
+  .status-full { background: #ffe6e5; color: #B11217; }
+  .request-btn-sm { background: #0B1C3D; color: white; padding: 5px 16px; border-radius: 40px; border: none; font-weight: 800; font-size: 0.7rem; cursor: pointer; transition: 0.2s; font-family: 'Quicksand', sans-serif; }
+  .request-btn-sm:hover { background: #B11217; }
+  .slider-controls { display: flex; justify-content: center; gap: 24px; margin-top: 32px; }
+  .slider-arrow { background: #FFFFFF; border: none; width: 52px; height: 52px; border-radius: 60px; font-size: 1.9rem; font-weight: bold; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08); color: #B11217; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+  .slider-arrow:hover { background: #B11217; color: white; transform: scale(1.06); }
+  .filters { display: flex; gap: 14px; flex-wrap: wrap; background: white; padding: 14px 24px; border-radius: 80px; margin-bottom: 32px; align-items: center; box-shadow: 0 6px 14px rgba(0,0,0,0.03); }
+  .filters select, .filters button { padding: 8px 20px; border-radius: 60px; border: 1px solid #e2e8f0; font-weight: 700; background: white; cursor: pointer; font-family: 'Quicksand', sans-serif; font-size: 0.8rem; }
+  .btn-clear { background: #f1f5f9; color: #0B1C3D; }
+  .btn-create { background: #B11217; color: white; padding: 10px 24px; border-radius: 60px; font-weight: 800; border: none; cursor: pointer; }
+  @media (max-width: 1100px) { .committee-card-compact { flex: 0 0 300px; } }
+  @media (max-width: 800px) { .committee-card-compact { flex: 0 0 260px; } .section-header { flex-direction: column; align-items: stretch; } }
+</style>
+
+<section class="section" id="browse">
+  <div class="section-header">
+    <h2>🔄 Committees Carousel</h2>
+    <div style="display: flex; gap: 14px;">
+      <button class="btn-create" id="createCommitteeBtn">➕ Create Committee</button>
+      <button class="btn-clear" id="clearFiltersBtn">🗑️ Clear Filters</button>
+    </div>
+  </div>
+  <div class="filters">
+    <select id="budgetFilter"><option value="">All Budgets</option><option value="under2000">Under ₨ 2,000</option><option value="2000-5000">₨ 2k - 5k</option><option value="above5000">Above ₨ 5k</option></select>
+    <select id="cityFilter"><option value="">All Cities</option><option value="Karachi">Karachi</option><option value="Lahore">Lahore</option><option value="Islamabad">Islamabad</option><option value="Peshawar">Peshawar</option><option value="Quetta">Quetta</option><option value="Faisalabad">Faisalabad</option><option value="Rawalpindi">Rawalpindi</option><option value="Multan">Multan</option></select>
+    <select id="trustFilter"><option value="">All Trust Levels</option><option value="fresher">Fresher</option><option value="verified">Verified</option></select>
+    <select id="statusFilter"><option value="">All Status</option><option value="open">Open</option><option value="full">Full</option></select>
+    <div id="resultCount" style="margin-left: auto; font-weight: 700;">Showing 0 committees</div>
+  </div>
+  <div class="carousel-outer">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </div>
+  <div class="slider-controls">
+    <button class="slider-arrow" id="prevSlideBtn">←</button>
+    <button class="slider-arrow" id="nextSlideBtn">→</button>
+  </div>
+</section>
+
+<script>
+  // Committees section logic
+  function getTrustBadge(joinDate) {
+    if(!joinDate) return { class:'badge-fresher', label:'🔴 Fresher' };
+    const days = (Date.now() - new Date(joinDate))/86400000;
+    return days < 30 ? { class:'badge-fresher', label:'🔴 Fresher' } : { class:'badge-verified', label:'🔵 Verified' };
+  }
+  
+  function generateDefaultCommittees() {
+    const cities = ['Karachi','Lahore','Islamabad','Peshawar','Quetta','Faisalabad','Rawalpindi','Multan'];
+    const orgs = ['Ahmed Khan','Fatima Malik','Usman Ali','Zara Sheikh','Bilal Chaudhry','Amna Butt','Tariq Mehmood','Sana Iqbal'];
+    let arr = [];
+    for(let i=1;i<=28;i++) {
+      const amount = [1200,1800,2500,3200,4000,5000][i%6];
+      const city = cities[i%cities.length];
+      const organizer = orgs[i%orgs.length];
+      const totalSlots = 8 + (i%10);
+      const filledSlots = Math.floor(Math.random() * (totalSlots+1));
+      const status = filledSlots === totalSlots ? 'full' : 'open';
+      const daysOld = i<15 ? Math.floor(Math.random()*25)+5 : Math.floor(Math.random()*180)+30;
+      arr.push({ id:`comm-${i+500}`, name:`${city} ${['Care','Unity','Barakah','Meeti'][i%4]} Committee`, organizerName:organizer, amount, totalSlots, filledSlots, duration:8+(i%12), city, status, organizerJoinDate: new Date(Date.now()-daysOld*86400000).toISOString() });
+    }
+    return arr;
+  }
+
+  function initData() {
+    if(!localStorage.getItem('approvedCommittees')) localStorage.setItem('approvedCommittees', JSON.stringify(generateDefaultCommittees()));
+    if(!localStorage.getItem('joinRequests')) localStorage.setItem('joinRequests', JSON.stringify([]));
+    if(!localStorage.getItem('currentUser')) localStorage.setItem('currentUser', JSON.stringify({ id:'user-1', name:'Ali Raza', phone:'0300-1234567', city:'Karachi' }));
+  }
+
+  let allCommittees = [];
+  let filteredList = [];
+  let currentIndex = 0;
+  let slidesToShow = 3;
+
+  function updateSlidesToShow() { slidesToShow = window.innerWidth <= 800 ? 1 : (window.innerWidth <= 1100 ? 2 : 3); }
+
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m=>({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+
+  function renderCarousel() {
+    const track = document.getElementById('carouselTrack');
+    if(!track) return;
+    updateSlidesToShow();
+    if(filteredList.length === 0) { track.innerHTML = `<div style="padding:80px; text-align:center; width:100%;">✨ No committees match filters</div>`; return; }
+    const maxStart = Math.max(0, filteredList.length - slidesToShow);
+    if(currentIndex > maxStart) currentIndex = maxStart;
+    if(currentIndex < 0) currentIndex = 0;
+    const visibleItems = filteredList.slice(currentIndex, currentIndex + slidesToShow);
+    track.innerHTML = visibleItems.map(comm => {
+      const badge = getTrustBadge(comm.organizerJoinDate);
+      const percent = (comm.filledSlots/comm.totalSlots)*100;
+      return `<div class="committee-card-compact">
+        <div class="trust-badge-sm ${badge.class}">${badge.label}</div>
+        <div class="organizer-sm"><div class="avatar-sm">${comm.organizerName.charAt(0)}</div><div><div class="committee-name-sm">${escapeHtml(comm.name)}</div><div class="organizer-name-sm">by ${escapeHtml(comm.organizerName)}</div></div></div>
+        <div class="amount-sm">₨ ${comm.amount.toLocaleString()}<span>/mo</span></div>
+        <div class="chips-sm"><div class="chip-sm">📍 ${comm.city}</div><div class="chip-sm">👥 ${comm.filledSlots}/${comm.totalSlots}</div><div class="chip-sm">📅 ${comm.duration}m</div></div>
+        <div class="progress-sm"><div class="progress-labels-sm"><span>Filled</span><span>${comm.totalSlots-comm.filledSlots} left</span></div><div class="progress-bar-sm"><div class="progress-fill-sm" style="width:${percent}%"></div></div></div>
+        <div class="card-footer-sm"><div class="status-sm status-${comm.status}">${comm.status === 'open' ? '● OPEN' : '● FULL'}</div><button class="request-btn-sm" data-id="${comm.id}" data-name="${escapeHtml(comm.name)}">Join →</button></div>
+      </div>`;
+    }).join('');
+    document.querySelectorAll('.request-btn-sm').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); window.openJoinModal(btn.dataset.id, btn.dataset.name); }));
+  }
+
+  window.updateFilteredList = function() {
+    const committees = JSON.parse(localStorage.getItem('approvedCommittees') || '[]');
+    allCommittees = committees;
+    const searchInput = document.getElementById('searchInput');
+    const search = searchInput ? searchInput.value.toLowerCase() : '';
+    const budget = document.getElementById('budgetFilter').value;
+    const cityF = document.getElementById('cityFilter').value;
+    const trustF = document.getElementById('trustFilter').value;
+    const statusF = document.getElementById('statusFilter').value;
+    let filtered = committees.filter(c => {
+      if(search && !c.name.toLowerCase().includes(search) && !c.organizerName.toLowerCase().includes(search) && !c.city.toLowerCase().includes(search)) return false;
+      if(budget==='under2000' && c.amount>=2000) return false;
+      if(budget==='2000-5000' && (c.amount<2000 || c.amount>5000)) return false;
+      if(budget==='above5000' && c.amount<=5000) return false;
+      if(cityF && c.city !== cityF) return false;
+      if(trustF) { const badge = getTrustBadge(c.organizerJoinDate); if(trustF==='verified' && badge.label !== '🔵 Verified') return false; if(trustF==='fresher' && badge.label !== '🔴 Fresher') return false; }
+      if(statusF && c.status !== statusF) return false;
+      return true;
+    });
+    filteredList = filtered;
+    currentIndex = 0;
+    const totalMembers = allCommittees.reduce((s,c)=>s+(c.filledSlots||0),0);
+    const uniqueCities = [...new Set(allCommittees.map(c=>c.city))];
+    document.getElementById('resultCount').innerHTML = `Showing ${filtered.length} of ${allCommittees.length} committees`;
+    renderCarousel();
+  }
+
+  function nextSlide() {
+    if(filteredList.length <= slidesToShow) return;
+    let maxStart = Math.max(0, filteredList.length - slidesToShow);
+    if(currentIndex + 1 <= maxStart) currentIndex++;
+    else currentIndex = 0;
+    renderCarousel();
+  }
+  function prevSlide() {
+    if(filteredList.length <= slidesToShow) return;
+    if(currentIndex - 1 >= 0) currentIndex--;
+    else currentIndex = Math.max(0, filteredList.length - slidesToShow);
+    renderCarousel();
+  }
+  function clearAllFilters() {
+    const searchInput = document.getElementById('searchInput');
+    if(searchInput) searchInput.value = '';
+    const heroSearch = document.getElementById('heroSearchInput');
+    if(heroSearch) heroSearch.value = '';
+    document.getElementById('budgetFilter').value = '';
+    document.getElementById('cityFilter').value = '';
+    document.getElementById('trustFilter').value = '';
+    document.getElementById('statusFilter').value = '';
+    window.updateFilteredList();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initData();
+    window.updateFilteredList();
+    document.getElementById('budgetFilter').addEventListener('change', window.updateFilteredList);
+    document.getElementById('cityFilter').addEventListener('change', window.updateFilteredList);
+    document.getElementById('trustFilter').addEventListener('change', window.updateFilteredList);
+    document.getElementById('statusFilter').addEventListener('change', window.updateFilteredList);
+    document.getElementById('clearFiltersBtn').addEventListener('click', clearAllFilters);
+    document.getElementById('createCommitteeBtn').addEventListener('click', () => window.createCommitteeModal());
+    document.getElementById('prevSlideBtn').addEventListener('click', prevSlide);
+    document.getElementById('nextSlideBtn').addEventListener('click', nextSlide);
+    window.addEventListener('resize', () => renderCarousel());
+    
+    // Global search input listener
+    const globalSearch = document.getElementById('searchInput');
+    if(globalSearch) {
+      globalSearch.addEventListener('input', window.updateFilteredList);
+    }
+  });
+</script>
